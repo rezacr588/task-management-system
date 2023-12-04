@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 // Add DbContext with PostgreSQL Configuration
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -36,5 +37,6 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAngularApp");
 
 // Map your API endpoints here
+app.MapControllers(); // Map attribute-routed controllers
 
 app.Run();
