@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 public class TodoItem
@@ -9,10 +7,10 @@ public class TodoItem
 
     [Required]
     [StringLength(100)]
-    public string Title { get; set; }
+    public required string Title { get; set; }
 
     [StringLength(500)]
-    public string Description { get; set; }
+    public required string Description { get; set; }
 
     public bool IsComplete { get; set; }
 
@@ -25,7 +23,7 @@ public class TodoItem
     public PriorityLevel Priority { get; set; }
 
     public int? AssignedToUserId { get; set; }
-    public virtual User AssignedToUser { get; set; }
+    public virtual required User AssignedToUser { get; set; }
 
     public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
 }
