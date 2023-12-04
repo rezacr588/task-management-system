@@ -6,5 +6,8 @@ namespace TodoApi{
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {}
+        public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Tag> Tags { get; set; }
     }
 }
