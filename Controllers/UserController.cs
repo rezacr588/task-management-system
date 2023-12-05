@@ -8,6 +8,29 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+
+public class UserRegistrationModel
+{
+    [Required]
+    [StringLength(100)]
+    public required string Name { get; set; }
+
+    [Required]
+    [EmailAddress]
+    public required string Email { get; set; }
+
+    [Required]
+    [MinLength(6)] // Example: Minimum length for password
+    public required string Password { get; set; }
+
+    // Depending on your requirements, you might want to validate the biometricToken and role as well
+    public required string BiometricToken { get; set; }
+
+    [Required]
+    public required string Role { get; set; }
+}
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -24,25 +47,27 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("signup")]
-    public async Task<IActionResult> SignUp(string name, string email, string password, string biometricToken, string role)
+    public async Task<IActionResult> SignUp([FromBody] UserRegistrationModel registrationModel)
     {
-        // Check if the user already exists
-        if (_context.Users.Any(u => u.Email == email))
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        if (_context.Users.Any(u => u.Email == registrationModel.Email))
         {
             return BadRequest("User with the given email already exists.");
         }
 
-        // Hash the password
-        var passwordHash = HashPassword(password);
+        var passwordHash = HashPassword(registrationModel.Password);
 
-        // Create the user object
         var user = new User
         {
-            Name = name,
-            Email = email,
+            Name = registrationModel.Name,
+            Email = registrationModel.Email,
             PasswordHash = passwordHash,
-            BiometricToken = biometricToken,
-            Role = role,
+            BiometricToken = registrationModel.BiometricToken,
+            Role = registrationModel.Role,
             CreatedAt = DateTime.UtcNow
         };
 
