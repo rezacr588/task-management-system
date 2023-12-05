@@ -3,17 +3,24 @@ using TodoApi;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
-
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly IConfiguration _configuration;
 
-    public UserController(ApplicationDbContext context)
+
+    public UserController(ApplicationDbContext context, IConfiguration configuration)
     {
-        _context = context;
+        _context = context;        
+        _configuration = configuration;
     }
 
     [HttpPost("signup")]
@@ -63,18 +70,54 @@ public class UserController : ControllerBase
         // Here, perform the actions upon successful biometric login
         // For example, generate and return a JWT token for the authenticated session
 
-        return Ok(user); // Or return an appropriate response
+        var tokenString = GenerateJwtToken(user);
+        return Ok(new { Token = tokenString });
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(int id)
+    [Authorize]
+    [HttpGet("profile")]
+    public async Task<IActionResult> GetUserProfile()
     {
-        var user = await _context.Users.FindAsync(id);
+        // Extract the email claim from the JWT token
+        var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (email == null)
+        {
+            return Unauthorized();
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
         if (user == null)
         {
-            return NotFound();
+            return NotFound("User not found.");
         }
-        return user;
+
+        return Ok(user);
+    }
+
+    private string GenerateJwtToken(User user)
+    {
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Email),
+            new Claim("id", user.Id.ToString()),
+            // Add additional claims as needed
+        };
+
+        var token = new JwtSecurityToken(
+            _configuration["Jwt:Issuer"],
+            _configuration["Jwt:Audience"],
+            claims,
+            expires: DateTime.Now.AddHours(1),
+            signingCredentials: creds);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
     private bool IsBiometricTokenValid(string token, int userId)

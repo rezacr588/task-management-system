@@ -1,5 +1,9 @@
 using TodoApi;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,21 +12,27 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+// Add JWT authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            NameClaimType = ClaimTypes.NameIdentifier
+        };
+    });
+
+
 // Add DbContext with PostgreSQL Configuration
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Add CORS services and define the policy
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "AllowAngularApp",
-                      policyBuilder =>
-                      {
-                          policyBuilder.WithOrigins("http://localhost:4200") // Replace with your Angular app's URL
-                                       .AllowAnyHeader()
-                                       .AllowAnyMethod();
-                      });
-});
 
 var app = builder.Build();
 
@@ -34,9 +44,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAngularApp");
 
 // Map your API endpoints here
 app.MapControllers(); // Map attribute-routed controllers
+
+// Use authentication
+app.UseAuthentication();
+
+// Use authorization
+app.UseAuthorization();
 
 app.Run();
