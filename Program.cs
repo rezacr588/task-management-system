@@ -8,11 +8,8 @@ using System.Security.Claims;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
-
-// Add JWT authentication
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<AuthorizationService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -28,6 +25,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             NameClaimType = ClaimTypes.NameIdentifier
         };
     });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 
 // Add DbContext with PostgreSQL Configuration
@@ -45,13 +45,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Map your API endpoints here
-app.MapControllers(); // Map attribute-routed controllers
-
-// Use authentication
+app.MapControllers();
 app.UseAuthentication();
-
-// Use authorization
 app.UseAuthorization();
 
 app.Run();
