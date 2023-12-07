@@ -27,7 +27,7 @@ public class UserRegistrationModel
 
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/users")]
 public class UserController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
