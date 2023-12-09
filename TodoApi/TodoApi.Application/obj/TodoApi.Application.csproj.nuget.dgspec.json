@@ -1,0 +1,209 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Application/TodoApi.Application.csproj": {}
+  },
+  "projects": {
+    "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Application/TodoApi.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Application/TodoApi.Application.csproj",
+        "projectName": "TodoApi.Application",
+        "projectPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Application/TodoApi.Application.csproj",
+        "packagesPath": "/Users/rezazeraat/.nuget/packages/",
+        "outputPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rezazeraat/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
+                "projectPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj"
+              },
+              "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj": {
+                "projectPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj",
+        "projectName": "TodoApi.Domain",
+        "projectPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj",
+        "packagesPath": "/Users/rezazeraat/.nuget/packages/",
+        "outputPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rezazeraat/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj",
+        "projectName": "TodoApi.Infrastructure",
+        "projectPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj",
+        "packagesPath": "/Users/rezazeraat/.nuget/packages/",
+        "outputPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rezazeraat/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
+                "projectPath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net8.0/TodoApi.Infrastructure.deps.json
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net8.0/TodoApi.Infrastructure.dll
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net8.0/TodoApi.Infrastructure.pdb
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net8.0/TodoApi.Domain.dll
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net8.0/TodoApi.Domain.pdb
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.csproj.AssemblyReference.cache
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.AssemblyInfoInputs.cache
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.AssemblyInfo.cs
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.sourcelink.json
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.csproj.CopyComplete
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.dll
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/refint/TodoApi.Infrastructure.dll
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.pdb
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net8.0/ref/TodoApi.Infrastructure.dll

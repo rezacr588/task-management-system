@@ -1,0 +1,12 @@
+/Users/rezazeraat/task-management-system/TodoApi.Domain/bin/Debug/net8.0/TodoApi.Domain.deps.json
+/Users/rezazeraat/task-management-system/TodoApi.Domain/bin/Debug/net8.0/TodoApi.Domain.dll
+/Users/rezazeraat/task-management-system/TodoApi.Domain/bin/Debug/net8.0/TodoApi.Domain.pdb
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/TodoApi.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/TodoApi.Domain.AssemblyInfoInputs.cache
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/TodoApi.Domain.AssemblyInfo.cs
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/TodoApi.Domain.csproj.CoreCompileInputs.cache
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/TodoApi.Domain.sourcelink.json
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/TodoApi.Domain.dll
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/refint/TodoApi.Domain.dll
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/TodoApi.Domain.pdb
+/Users/rezazeraat/task-management-system/TodoApi.Domain/obj/Debug/net8.0/ref/TodoApi.Domain.dll

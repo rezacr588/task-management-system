@@ -1,0 +1,5 @@
+/Users/rezazeraat/task-management-system/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rezazeraat/task-management-system/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.AssemblyInfoInputs.cache
+/Users/rezazeraat/task-management-system/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.AssemblyInfo.cs
+/Users/rezazeraat/task-management-system/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/rezazeraat/task-management-system/TodoApi.Infrastructure/obj/Debug/net8.0/TodoApi.Infrastructure.sourcelink.json
