@@ -1,40 +1,71 @@
-TodoApi/
+task-management-system/
 │
-├──TodoApi.Domain/
-│ ├── Entities/
-│ │ └── TodoItem.cs
-│ ├── Enums/
-│ │ └── PriorityLevel.cs
-│ └── Interfaces/
-│ └── IRepository.cs
+├── .github/
+│ └── workflows/
+│ └── dotnet.yml
 │
-├──TodoApi.Application/
-│ ├── Services/
-│ │ ├── TodoItemService.cs
-│ │ └── UserService.cs
-│ ├── Interfaces/
-│ │ ├── ITodoItemService.cs
-│ │ └── IUserService.cs
-│ ├── DTOs/
-│ │ └── TodoItemDto.cs
-│ └── Mappers/
-│ └──--- TodoItemProfile.cs // For AutoMapper, if used
-│
-├──TodoApi.Infrastructure/
-│ ├── Data/
-│ │ ├── ApplicationDbContext.cs
-│ │ └── Configurations/
-│ ├── Repositories/
-│ │ ├── TodoItemRepository.cs
-│ │ └── UserRepository.cs
-│ └── Logging/
-│ └──--- FileLogger.cs // Example for custom logging
-│
-├──TodoApi.WebApi/
+├── TodoApi/
+│ ├── TodoApi.Application/
+│ │ ├── DTOs/
+│ │ │ ├── TagDto.cs
+│ │ │ ├── TodoItemDto.cs
+│ │ │ ├── UserRegistrationModel.cs
+│ │ │ └── UserUpdateDto.cs
+│ │ ├── Interfaces/
+│ │ │ ├── IAuthorizationService.cs
+│ │ │ ├── ITagService.cs
+│ │ │ ├── ITodoItemService.cs
+│ │ │ └── IUserService.cs
+│ │ ├── Mappers/
+│ │ │ └── TodoItemProfile.cs
+│ │ ├── Services/
+│ │ │ ├── AuthorizationService.cs
+│ │ │ ├── TodoItemService.cs
+│ │ │ └── UserService.cs
+│ │ └── (other application files and directories)
+│ │
+│ ├── TodoApi.Domain/
+│ │ ├── Entities/
+│ │ │ ├── Tag.cs
+│ │ │ ├── TodoItem.cs
+│ │ │ └── User.cs
+│ │ ├── Enums/
+│ │ │ └── PriorityLevel.cs
+│ │ ├── Interfaces/
+│ │ │ ├── IRepository.cs
+│ │ │ ├── ITodoItemRepository.cs
+│ │ │ └── IUserRepository.cs
+│ │ └── (other domain files and directories)
+│ │
+│ ├── TodoApi.Infrastructure/
+│ │ ├── Data/
+│ │ │ ├── ApplicationDbContext.cs
+│ │ │ ├── Configurations/
+│ │ │ │ ├── TagConfiguration.cs
+│ │ │ │ ├── TodoItemConfiguration.cs
+│ │ │ │ └── UserConfiguration.cs
+│ │ ├── Logging/
+│ │ │ └── FileLogger.cs
+│ │ ├── Repositories/
+│ │ │ ├── TodoItemRepository.cs
+│ │ │ └── UserRepository.cs
+│ │ └── (other infrastructure files and directories)
+│ │
+│ └── TodoApi.WebApi/
 │ ├── Controllers/
+│ │ ├── TagController.cs
 │ │ ├── TodoItemsController.cs
 │ │ └── UsersController.cs
-│ ├── Program.cs
-│ └── appsettings.json
+│ ├── Properties/
+│ │ └── launchSettings.json
+│ ├── (other WebApi files and directories)
+│ ├── appsettings.json
+│ ├── appsettings.Development.json
+│ └── TodoApi.WebApi.http
 │
-└── YourProject.sln // Solution file
+├── README.md
+└── new-architect.md
+
+```
+
+```
