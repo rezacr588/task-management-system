@@ -6,18 +6,22 @@ using TodoApi.Infrastructure.Data; // Adjust this to your actual namespace
 using TodoApi.Application.Interfaces; // Adjust this to your actual namespace
 using TodoApi.Application.Services; // Adjust this to your actual namespace
 using Microsoft.OpenApi.Models;
+using TodoApi.Application.DTOs;
+
 using System;
+using TodoApi.Domain.Interfaces;
+using TodoApi.Domain.Entities;
 // Add other necessary using directives
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the DI container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to DI container
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ITodoItemService, TodoItemService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TodoItemService>();
 // Add other scoped services
 
 builder.Services.AddControllers();

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
+using System.Threading.Tasks;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -22,15 +23,15 @@ public class UserController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _userService.RegisterUserAsync(registrationDto);
-
-        if (result.Success)
+        try
         {
-            return Ok(result);
+            var user = await _userService.CreateUserAsync(registrationDto);
+            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }
-        else
+        catch (Exception ex)
         {
-            return BadRequest(result.Message);
+            // Handle specific exceptions if necessary and return appropriate HTTP response
+            return BadRequest(ex.Message);
         }
     }
 
@@ -38,20 +39,24 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDto userUpdateDto)
     {
-        if (id != userUpdateDto.Id)
+        if (!ModelState.IsValid)
         {
-            return BadRequest("ID mismatch");
+            return BadRequest(ModelState);
         }
 
-        var result = await _userService.UpdateUserAsync(id, userUpdateDto);
-
-        if (result.Success)
+        try
         {
-            return Ok(result);
+            await _userService.UpdateUserAsync(id, userUpdateDto);
+            return NoContent(); // 204 No Content is often used for successful PUT requests
         }
-        else
+        catch (KeyNotFoundException)
         {
-            return BadRequest(result.Message);
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            // Handle specific exceptions if necessary
+            return BadRequest(ex.Message);
         }
     }
 
@@ -59,15 +64,19 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        var result = await _userService.DeleteUserAsync(id);
-
-        if (result.Success)
+        try
         {
-            return Ok(result);
+            await _userService.DeleteUserAsync(id);
+            return NoContent(); // 204 No Content is often used for successful DELETE requests
         }
-        else
+        catch (KeyNotFoundException)
         {
-            return BadRequest(result.Message);
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            // Handle specific exceptions if necessary
+            return BadRequest(ex.Message);
         }
     }
 
@@ -85,5 +94,19 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    // Additional actions can be added here
+    // GET: api/User/ByEmail/{email}
+    [HttpGet("ByEmail/{email}")]
+    public async Task<IActionResult> GetUserByEmail(string email)
+    {
+        var user = await _userService.GetUserByEmailAsync(email);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(user);
+    }
+
+    // Additional actions can be added here as needed
 }
