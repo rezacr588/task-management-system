@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
-using System.Threading.Tasks;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -107,6 +106,4 @@ public class UserController : ControllerBase
 
         return Ok(user);
     }
-
-    // Additional actions can be added here as needed
 }
