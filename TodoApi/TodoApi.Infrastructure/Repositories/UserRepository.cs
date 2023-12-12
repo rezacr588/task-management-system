@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Domain.Entities;
 using TodoApi.Domain.Interfaces;
@@ -31,6 +30,11 @@ namespace TodoApi.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UserExists(User user)
+        {
+            await _context.Users.AnyAsync(u => u.Email == user.Email);
+        }
+
         public async Task UpdateAsync(User user)
         {
             _context.Users.Update(user);
@@ -43,6 +47,27 @@ namespace TodoApi.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        // Implement other methods as needed
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.Users.AnyAsync(u => u.Id == id);
+        }
+
+        public async Task<bool> ExistsByEmailAsync(string email)
+        {
+            return await _context.Users.AnyAsync(u => u.Email == email);
+        }
+
+        public async Task<bool> ExistsByBiometricTokenAsync(string biometricToken)
+        {
+            return await _context.Users.AnyAsync(u => u.BiometricToken == biometricToken);
+        }
+
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+        
+        
+
     }
 }

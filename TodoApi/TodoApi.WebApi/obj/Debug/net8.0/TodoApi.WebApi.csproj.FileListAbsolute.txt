@@ -53,3 +53,4 @@
 /Users/rezazeraat/task-management-system/TodoApi/TodoApi.WebApi/obj/Debug/net8.0/TodoApi.WebApi.pdb
 /Users/rezazeraat/task-management-system/TodoApi/TodoApi.WebApi/obj/Debug/net8.0/TodoApi.WebApi.genruntimeconfig.cache
 /Users/rezazeraat/task-management-system/TodoApi/TodoApi.WebApi/obj/Debug/net8.0/ref/TodoApi.WebApi.dll
+/Users/rezazeraat/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -11,6 +11,5 @@ namespace TodoApi.Domain.Interfaces
         Task AddAsync(TodoItem todoItem);
         Task UpdateAsync(TodoItem todoItem);
         Task DeleteAsync(TodoItem todoItem);
-        // Add other methods as required
     }
 }

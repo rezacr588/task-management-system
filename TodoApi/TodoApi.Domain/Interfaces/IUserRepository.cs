@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using TodoApi.Domain.Entities;
 
 namespace TodoApi.Domain.Interfaces
@@ -10,6 +9,7 @@ namespace TodoApi.Domain.Interfaces
         Task AddAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(User user);
-        // Other methods as required
+        Task<IEnumerable<User>> GetAllAsync();
+        
     }
 }

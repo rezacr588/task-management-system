@@ -12,6 +12,8 @@ using System;
 using TodoApi.Domain.Interfaces;
 using TodoApi.Domain.Entities;
 using TodoApi.Infrastructure.Services;
+using TodoApi.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Hosting;
 // Add other necessary using directives
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<ITodoItemService,TodoItemService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITodoItemRepository, TodoItemRepository>();
+builder.Services.AddAutoMapper(typeof(IStartup));
 // Add other scoped services
 
 builder.Services.AddControllers();

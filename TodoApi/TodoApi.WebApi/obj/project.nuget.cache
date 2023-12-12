@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "98yFlFO+zhvcVd3G5Sg+meb/nGUCA8TCnKRy00hy9TQDz1RVD7LDF4YGDrHYkMsvmGb3oyVZxLTQv88cgEgSPQ==",
+  "dgSpecHash": "Bdaqe5/agIEvF87xttVBcRgvXzfohvgulH7otBnF8crfxiZSB4TRCEquLMMQCbzT8S77rDIfyxuI5YcbNN1Azw==",
   "success": true,
   "projectFilePath": "/Users/rezazeraat/task-management-system/TodoApi/TodoApi.WebApi/TodoApi.WebApi.csproj",
   "expectedPackageFiles": [
     "/Users/rezazeraat/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/Users/rezazeraat/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.authentication/2.2.0/microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.authentication.cookies/2.2.0/microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",

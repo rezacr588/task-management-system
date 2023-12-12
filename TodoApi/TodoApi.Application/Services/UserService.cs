@@ -2,21 +2,25 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
+using TodoApi.Domain.DTOs;
 using TodoApi.Domain.Entities;
 using TodoApi.Domain.Interfaces;
+using AutoMapper;
 
 namespace TodoApi.Application.Services
 {
     public class UserService: IUserService
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(IRepository<User> userRepository)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
-        public async Task<User> CreateUserAsync(UserRegistrationDto registrationModel)
+        public async Task<UserDto> CreateUserAsync(UserRegistrationDto registrationModel)
         {
             if (await UserExists(registrationModel.Email))
             {
@@ -36,7 +40,7 @@ namespace TodoApi.Application.Services
             };
 
             await _userRepository.AddAsync(user);
-            return user;
+            return _mapper.Map<UserDto>(user); // Return a DTO instead of the entity
         }
 
         private string HashPassword(string password)
@@ -56,22 +60,31 @@ namespace TodoApi.Application.Services
                 numBytesRequested: 256 / 8));
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
-        {
-            return await _userRepository.GetByIdAsync(id);
+        public async Task<UserDto> GetUserByIdAsync(int id)
+        {        
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            return _mapper.Map<UserDto>(user); // Return a DTO instead of the entity
         }
 
         public async Task<bool> UserExists(string email)
         {
-            var users = await _userRepository.FindAsync(u => u.Email == email);
-            return users.Any();
+            var users = await _userRepository.GetByEmailAsync(email);
+            return users != null;
         }
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<UserDto> GetUserByEmailAsync(string email)
         {
-            // Await the completion of FindAsync to get IEnumerable<User>,
-            // then apply FirstOrDefaultAsync
-            var users = await _userRepository.FindAsync(u => u.Email == email);
-            return users.FirstOrDefault();
+            var user = await _userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            return _mapper.Map<UserDto>(user); // Return a DTO instead of the entity
         }
 
         public async Task UpdateUserAsync(int id, UserUpdateDto updateModel)
@@ -88,7 +101,7 @@ namespace TodoApi.Application.Services
             user.BiometricToken = updateModel.BiometricToken;
             user.Role = updateModel.Role;
 
-            _userRepository.Update(user);
+            _ = _userRepository.UpdateAsync(user);
         }
 
         public async Task DeleteUserAsync(int id)
@@ -99,7 +112,7 @@ namespace TodoApi.Application.Services
                 throw new KeyNotFoundException("User not found.");
             }
 
-            await _userRepository.RemoveAsync(user);
+            await _userRepository.DeleteAsync(user);
         }
     }
 }

@@ -1,32 +1,44 @@
 using System.Linq.Expressions;
 using TodoApi.Application.DTOs;
 using TodoApi.Domain.Interfaces;
+using AutoMapper;
+using TodoApi.Domain.Entities;
 
 namespace TodoApi.Application.Services
 {
     public class TodoItemService: ITodoItemService
     {
-        private readonly IRepository<TodoItemDto> _todoItemRepository;
+        private readonly ITodoItemRepository _todoItemRepository;
+        private readonly IMapper _mapper;
 
-        public TodoItemService(IRepository<TodoItemDto> todoItemRepository)
+        public TodoItemService(ITodoItemRepository todoItemRepository, IMapper mapper)
         {
             _todoItemRepository = todoItemRepository;
+            _mapper = mapper;
         }
 
         public async Task<TodoItemDto> CreateTodoItemAsync(TodoItemDto todoItem)
         {
-            await _todoItemRepository.AddAsync(todoItem);
-            return todoItem;
+            var tItem = _mapper.Map<TodoItem>(todoItem);
+            await _todoItemRepository.AddAsync(tItem);
+            return _mapper.Map<TodoItemDto>(tItem);
         }
 
         public async Task<TodoItemDto> GetTodoItemByIdAsync(int id)
         {
-            return await _todoItemRepository.GetByIdAsync(id);
+            var todoItem = await _todoItemRepository.GetByIdAsync(id);
+            if (todoItem == null)
+            {
+                throw new KeyNotFoundException("Todo item not found.");
+            }
+
+            return _mapper.Map<TodoItemDto>(todoItem);
         }
 
         public async Task<IEnumerable<TodoItemDto>> GetAllTodoItemsAsync(Expression<Func<TodoItemDto, bool>> filter)
         {
-            return await _todoItemRepository.FindAsync(filter);
+            var todoItems = await _todoItemRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<TodoItemDto>>(todoItems);
         }
 
         public async Task UpdateTodoItemAsync(int id, TodoItemDto updatedTodoItem)
@@ -37,11 +49,12 @@ namespace TodoApi.Application.Services
                 throw new KeyNotFoundException("Todo item not found.");
             }
 
-            // Map the updated properties here
             todoItem.Title = updatedTodoItem.Title;
-            // ... other property mappings
+            todoItem.Description = updatedTodoItem.Description;
+            todoItem.IsComplete = updatedTodoItem.IsComplete;
+            todoItem.CompletedDate = updatedTodoItem.IsComplete ? DateTime.UtcNow : null;
 
-            _todoItemRepository.Update(todoItem);
+            _todoItemRepository.UpdateAsync(todoItem);
         }
 
         public async Task DeleteTodoItemAsync(int id)
@@ -52,7 +65,7 @@ namespace TodoApi.Application.Services
                 throw new KeyNotFoundException("Todo item not found.");
             }
 
-            await _todoItemRepository.RemoveAsync(todoItem);
+            await _todoItemRepository.DeleteAsync(todoItem);
         }
 
         public async Task MarkTodoItemCompleteAsync(int id, bool isComplete)
@@ -66,7 +79,7 @@ namespace TodoApi.Application.Services
             todoItem.IsComplete = isComplete;
             todoItem.CompletedDate = isComplete ? DateTime.UtcNow : null;
 
-            _todoItemRepository.Update(todoItem);
+            _todoItemRepository.UpdateAsync(todoItem);
         }
     }
 }
