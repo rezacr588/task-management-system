@@ -7,7 +7,7 @@ using TodoApi.Domain.Entities; // Adjust the namespace as necessary
 using TodoApi.Infrastructure.Data; // Adjust the namespace as necessary
 using Microsoft.Extensions.Configuration;
 
-namespace YourProject.Infrastructure.Services
+namespace TodoApi.Infrastructure.Services
 {
     public class AuthorizationService : IAuthorizationService
     {

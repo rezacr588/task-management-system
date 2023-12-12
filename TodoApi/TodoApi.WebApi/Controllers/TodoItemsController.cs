@@ -18,7 +18,11 @@ public class TodoItemsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllTodoItems()
     {
-        var todoItems = await _todoItemService.GetAllTodoItemsAsync();
+
+        var todoItems = await _todoItemService.GetAllTodoItemsAsync(
+            filter: null
+        );
+
         return Ok(todoItems);
     }
 

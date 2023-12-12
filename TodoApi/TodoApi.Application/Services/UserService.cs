@@ -1,12 +1,13 @@
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using TodoApi.Application.DTOs;
+using TodoApi.Application.Interfaces;
 using TodoApi.Domain.Entities;
 using TodoApi.Domain.Interfaces;
 
 namespace TodoApi.Application.Services
 {
-    public class UserService
+    public class UserService: IUserService
     {
         private readonly IRepository<User> _userRepository;
 
@@ -71,6 +72,34 @@ namespace TodoApi.Application.Services
             // then apply FirstOrDefaultAsync
             var users = await _userRepository.FindAsync(u => u.Email == email);
             return users.FirstOrDefault();
+        }
+
+        public async Task UpdateUserAsync(int id, UserUpdateDto updateModel)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            // Map the updated properties here
+            user.Name = updateModel.Name;
+            user.Email = updateModel.Email;
+            user.BiometricToken = updateModel.BiometricToken;
+            user.Role = updateModel.Role;
+
+            _userRepository.Update(user);
+        }
+
+        public async Task DeleteUserAsync(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            await _userRepository.RemoveAsync(user);
         }
     }
 }

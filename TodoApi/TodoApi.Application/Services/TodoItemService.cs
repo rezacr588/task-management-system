@@ -1,38 +1,35 @@
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using TodoApi.Domain.Entities;
+using TodoApi.Application.DTOs;
 using TodoApi.Domain.Interfaces;
 
 namespace TodoApi.Application.Services
 {
-    public class TodoItemService
+    public class TodoItemService: ITodoItemService
     {
-        private readonly IRepository<TodoItem> _todoItemRepository;
+        private readonly IRepository<TodoItemDto> _todoItemRepository;
 
-        public TodoItemService(IRepository<TodoItem> todoItemRepository)
+        public TodoItemService(IRepository<TodoItemDto> todoItemRepository)
         {
             _todoItemRepository = todoItemRepository;
         }
 
-        public async Task<TodoItem> CreateTodoItemAsync(TodoItem todoItem)
+        public async Task<TodoItemDto> CreateTodoItemAsync(TodoItemDto todoItem)
         {
             await _todoItemRepository.AddAsync(todoItem);
             return todoItem;
         }
 
-        public async Task<TodoItem> GetTodoItemByIdAsync(int id)
+        public async Task<TodoItemDto> GetTodoItemByIdAsync(int id)
         {
             return await _todoItemRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<TodoItem>> GetAllTodoItemsAsync(Expression<Func<TodoItem, bool>> filter)
+        public async Task<IEnumerable<TodoItemDto>> GetAllTodoItemsAsync(Expression<Func<TodoItemDto, bool>> filter)
         {
             return await _todoItemRepository.FindAsync(filter);
         }
 
-        public async Task UpdateTodoItemAsync(int id, TodoItem updatedTodoItem)
+        public async Task UpdateTodoItemAsync(int id, TodoItemDto updatedTodoItem)
         {
             var todoItem = await _todoItemRepository.GetByIdAsync(id);
             if (todoItem == null)
