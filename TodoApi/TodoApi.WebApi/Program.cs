@@ -1,20 +1,12 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Infrastructure.Data; // Adjust this to your actual namespace
 using TodoApi.Application.Interfaces; // Adjust this to your actual namespace
 using TodoApi.Application.Services; // Adjust this to your actual namespace
 using Microsoft.OpenApi.Models;
-using TodoApi.Application.DTOs;
 
-using System;
 using TodoApi.Domain.Interfaces;
-using TodoApi.Domain.Entities;
 using TodoApi.Infrastructure.Services;
 using TodoApi.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Hosting;
-// Add other necessary using directives
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,11 +34,9 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 

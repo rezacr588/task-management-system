@@ -1,64 +1,41 @@
-# TodoApi Project
+# Task Management System
 
 ## Overview
 
-TodoApi is an ASP.NET Core Web API designed to manage todo items. It follows Clean Architecture principles and includes features such as user authentication, CRUD operations for todo items, and more.
+The Task Management System is a comprehensive solution for managing tasks, users, and tags. It's built using a clean architecture with separate layers for application logic, domain entities, and infrastructure.
 
 ## Features
 
-- User registration and authentication.
-- CRUD operations for todo items.
-- Biometric token validation.
-- JWT (JSON Web Token) based authorization.
-- Clean Architecture: Domain, Application, Infrastructure, and Presentation layers.
+- **Task Management**: Create, update, delete, and retrieve tasks with details like title, description, due date, and completion status.
+- **User Management**: Handle user registration, updates, and retrieval. Includes features like biometric token validation and JWT token generation for authentication.
+- **Tag Management**: Manage tags associated with tasks, allowing for better organization and categorization of tasks.
 
-## Prerequisites
+## Architecture
 
-- .NET 6 SDK
-- Visual Studio 2019/2022 or VSCode with C# extension
-- SQL Server (for the database)
+- **Application Layer**: Contains DTOs, interfaces, and services for handling business logic.
+  - DTOs like `TagDto`, `TodoItemDto`, `UserDto`, `UserRegistrationModel`, and `UserUpdateDto` for data transfer.
+  - Interfaces like `IAuthorizationService`, `ITagService`, `ITodoItemService`, and `IUserService` define the contracts for services.
+  - Services like `AuthorizationService`, `TodoItemService`, and `UserService` implement the business logic.
+- **Domain Layer**: Defines entities and interfaces for the domain model.
+  - Entities like `Tag`, `TodoItem`, and `User` represent the core business objects.
+  - Interfaces like `IRepository`, `ITodoItemRepository`, and `IUserRepository` for data access.
+  - Enums like `PriorityLevel` for defining priority levels of tasks.
+- **Infrastructure Layer**: Handles data persistence and other infrastructure concerns.
+  - `ApplicationDbContext` for database context.
+  - Repositories for implementing data access logic.
 
-## Getting Started
+## Technologies
 
-1. **Clone the Repository**
+- .NET 8.0
+- Entity Framework Core
+- AutoMapper for object mapping
 
-   ```
-   git clone https://github.com/rezacr588/TodoApi.git
-   cd TodoApi
-   ```
+## Setup and Configuration
 
-2. **Set up the Database**
-
-   - Ensure SQL Server is installed and running.
-   - Update the connection string in `appsettings.json` in the WebApi project.
-
-3. **Build the Solution**
-
-   ```
-   dotnet build TodoApi.sln
-   ```
-
-4. **Run the Application**
-
-   - Using the command line:
-     ```
-     dotnet run --project /TodoApi.WebApi/TodoApi.WebApi.csproj
-     ```
-   - Or using Visual Studio, set the WebApi project as the startup project and run.
-
-5. **Access the API**
-
-   - The API will be available at `http://localhost:5150` by default.
-   - Use Swagger UI to test the API endpoints.
-
-## Usage
-
-Describe how to use the API, including example requests and responses.
+- Ensure .NET 8.0 SDK is installed.
+- Update `appsettings.json` with the necessary configuration.
+- Run the application using `dotnet run`.
 
 ## Contributing
 
-If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
-
-## Licensing
-
-State the license or say something like: "The code in this project is licensed under MIT license."
+Contributions to the Task Management System are welcome. Please follow the standard procedures for submitting issues and pull requests.
