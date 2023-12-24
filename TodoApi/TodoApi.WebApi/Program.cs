@@ -17,12 +17,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to DI container
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<ITodoItemService,TodoItemService>();
+builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
+builder.Services.AddScoped<ITokenValidator, BiometricTokenValidator>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITodoItemRepository, TodoItemRepository>();
 builder.Services.AddAutoMapper(typeof(IStartup));
-// Add other scoped services
 
+// Add other scoped services
 builder.Services.AddControllers();
 
 // Add Swagger/OpenAPI support

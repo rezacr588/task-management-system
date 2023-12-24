@@ -9,24 +9,16 @@ using Microsoft.Extensions.Configuration;
 
 namespace TodoApi.Infrastructure.Services
 {
-    public class AuthorizationService : IAuthorizationService
+    public class JwtTokenGenerator : ITokenGenerator
     {
-        private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
-
-        public AuthorizationService(ApplicationDbContext context, IConfiguration configuration)
+        
+        public JwtTokenGenerator(IConfiguration configuration)
         {
-            _context = context;
             _configuration = configuration;
         }
 
-        public bool IsBiometricTokenValid(string token, int userId)
-        {
-            var user = _context.Users.Find(userId);
-            return user != null && user.BiometricToken == token;
-        }
-
-        public string GenerateJwtToken(User user)
+        public string GenerateToken(User user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -50,4 +42,43 @@ namespace TodoApi.Infrastructure.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
+
+    public class BiometricTokenValidator : ITokenValidator
+    {
+        private readonly ApplicationDbContext _context;
+
+        public BiometricTokenValidator(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public bool ValidateToken(string token, int userId)
+        {
+            var user = _context.Users.Find(userId);
+            return user != null && user.BiometricToken == token;
+        }
+    }
+
+    public class AuthorizationService : IAuthorizationService
+    {
+        private readonly ITokenGenerator _tokenGenerator;
+        private readonly ITokenValidator _tokenValidator;
+
+        public AuthorizationService(ITokenGenerator tokenGenerator, ITokenValidator tokenValidator)
+        {
+            _tokenGenerator = tokenGenerator;
+            _tokenValidator = tokenValidator;
+        }
+
+        public bool IsBiometricTokenValid(string token, int userId)
+        {
+            return _tokenValidator.ValidateToken(token, userId);
+        }
+
+        public string GenerateJwtToken(User user)
+        {
+            return _tokenGenerator.GenerateToken(user);
+        }
+    }
+
 }
