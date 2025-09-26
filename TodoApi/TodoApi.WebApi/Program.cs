@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using TodoApi.Domain.Interfaces;
 using TodoApi.Infrastructure.Services;
 using TodoApi.Infrastructure.Repositories;
+using TodoApi.Application.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,12 +18,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to DI container
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<ITodoItemService,TodoItemService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
 builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<ITokenValidator, BiometricTokenValidator>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITodoItemRepository, TodoItemRepository>();
-builder.Services.AddAutoMapper(typeof(IStartup));
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
+builder.Services.AddAutoMapper(typeof(CollaborationProfile).Assembly);
 
 // Add other scoped services
 builder.Services.AddControllers();
@@ -47,3 +52,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

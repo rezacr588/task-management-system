@@ -25,6 +25,8 @@ namespace TodoApi.Domain.Entities
         public DateTime? LastUpdatedAt { get; set; }
 
         public virtual ICollection<TodoItem> AssignedTodoItems { get; set; } = new HashSet<TodoItem>();
+        public virtual ICollection<Comment> AuthoredComments { get; set; } = new HashSet<Comment>();
+        public virtual ICollection<ActivityLogEntry> AuthoredActivityLogEntries { get; set; } = new HashSet<ActivityLogEntry>();
     }
 
  }

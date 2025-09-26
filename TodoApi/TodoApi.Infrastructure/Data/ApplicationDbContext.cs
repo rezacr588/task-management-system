@@ -14,6 +14,8 @@ namespace TodoApi.Infrastructure.Data
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<ActivityLogEntry> ActivityLogEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +25,8 @@ namespace TodoApi.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new TodoItemConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new TagConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
+            modelBuilder.ApplyConfiguration(new ActivityLogEntryConfiguration());
             // Add configurations for other entities as needed
         }
     }
