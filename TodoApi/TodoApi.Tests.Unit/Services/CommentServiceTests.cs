@@ -8,6 +8,7 @@ using TodoApi.Application.Services;
 using TodoApi.Domain.Entities;
 using TodoApi.Domain.Enums;
 using TodoApi.Domain.Interfaces;
+using Xunit;
 
 namespace TodoApi.Tests.Unit.Services
 {

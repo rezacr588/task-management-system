@@ -9,7 +9,7 @@ using TodoApi.Domain.Enums;
 
 namespace TodoApi.Application.Services
 {
-    public class TodoItemService: ITodoItemService
+    public class TodoItemService : ITodoItemService
     {
         private readonly ITodoItemRepository _todoItemRepository;
         private readonly IMapper _mapper;
@@ -40,7 +40,7 @@ namespace TodoApi.Application.Services
             return _mapper.Map<TodoItemDto>(todoItem);
         }
 
-        public async Task<IEnumerable<TodoItemDto>> GetAllTodoItemsAsync(Expression<Func<TodoItemDto, bool>> filter)
+        public async Task<IEnumerable<TodoItemDto>> GetAllTodoItemsAsync(Expression<Func<TodoItemDto, bool>>? filter)
         {
             var todoItems = await _todoItemRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<TodoItemDto>>(todoItems);

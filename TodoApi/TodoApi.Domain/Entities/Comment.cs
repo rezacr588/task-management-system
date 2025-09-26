@@ -13,7 +13,7 @@ namespace TodoApi.Domain.Entities
         [ForeignKey(nameof(TodoItem))]
         public int TodoItemId { get; set; }
 
-        public virtual required TodoItem TodoItem { get; set; }
+        public virtual TodoItem? TodoItem { get; set; }
 
         [ForeignKey(nameof(Author))]
         public int? AuthorId { get; set; }

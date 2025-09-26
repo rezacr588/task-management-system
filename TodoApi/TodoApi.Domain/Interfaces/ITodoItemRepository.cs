@@ -6,7 +6,7 @@ namespace TodoApi.Domain.Interfaces
 {
     public interface ITodoItemRepository
     {
-        Task<TodoItem> GetByIdAsync(int id);
+        Task<TodoItem?> GetByIdAsync(int id);
         Task<IEnumerable<TodoItem>> GetAllAsync();
         Task AddAsync(TodoItem todoItem);
         Task UpdateAsync(TodoItem todoItem);

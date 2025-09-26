@@ -1,0 +1,262 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Integration/TodoApi.Tests.Integration.csproj": {}
+  },
+  "projects": {
+    "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj",
+        "projectName": "TodoApi.Domain",
+        "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj",
+        "packagesPath": "/Users/rezazeraat/.nuget/packages/",
+        "outputPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rezazeraat/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj",
+        "projectName": "TodoApi.Infrastructure",
+        "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj",
+        "packagesPath": "/Users/rezazeraat/.nuget/packages/",
+        "outputPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rezazeraat/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
+                "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Integration/TodoApi.Tests.Integration.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Integration/TodoApi.Tests.Integration.csproj",
+        "projectName": "TodoApi.Tests.Integration",
+        "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Integration/TodoApi.Tests.Integration.csproj",
+        "packagesPath": "/Users/rezazeraat/.nuget/packages/",
+        "outputPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Integration/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rezazeraat/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
+                "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj"
+              },
+              "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj": {
+                "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.12.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.5.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@ namespace TodoApi.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<TodoItem> GetByIdAsync(int id)
+        public async Task<TodoItem?> GetByIdAsync(int id)
         {
             return await _context.TodoItems.FindAsync(id);
         }

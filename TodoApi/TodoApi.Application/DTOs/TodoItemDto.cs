@@ -36,9 +36,9 @@ namespace TodoApi.Application.DTOs
     public class TodoItemDto : IDetailedTodoInfo, IPriorityInfo
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         public bool IsComplete { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         public DateTime DueDate { get; set; }
         public DateTime? CompletedDate { get; set; }
         public PriorityLevelDto Priority { get; set; }

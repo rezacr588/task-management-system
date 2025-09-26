@@ -12,7 +12,7 @@ namespace TodoApi.Infrastructure.Services
     public class JwtTokenGenerator : ITokenGenerator
     {
         private readonly IConfiguration _configuration;
-        
+
         public JwtTokenGenerator(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -20,7 +20,13 @@ namespace TodoApi.Infrastructure.Services
 
         public string GenerateToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var secret = _configuration["Jwt:Key"];
+            if (string.IsNullOrWhiteSpace(secret))
+            {
+                throw new InvalidOperationException("JWT secret is not configured. Please set 'Jwt:Key' in configuration.");
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]

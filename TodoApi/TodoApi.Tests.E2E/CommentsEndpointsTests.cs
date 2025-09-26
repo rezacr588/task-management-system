@@ -4,6 +4,7 @@ using FluentAssertions;
 using TodoApi.Application.DTOs;
 using TodoApi.Domain.Enums;
 using TodoApi.Tests.E2E.Infrastructure;
+using Xunit;
 
 namespace TodoApi.Tests.E2E
 {

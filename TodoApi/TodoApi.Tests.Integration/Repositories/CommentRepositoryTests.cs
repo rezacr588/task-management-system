@@ -6,6 +6,7 @@ using TodoApi.Domain.Entities;
 using TodoApi.Domain.Enums;
 using TodoApi.Infrastructure.Data;
 using TodoApi.Infrastructure.Repositories;
+using Xunit;
 
 namespace TodoApi.Tests.Integration.Repositories
 {

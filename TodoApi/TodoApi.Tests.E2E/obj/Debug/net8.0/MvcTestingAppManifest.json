@@ -1,0 +1,6 @@
+{
+  "TodoApi.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/rezazeraat\/Projects\/task-management-system\/TodoApi\/TodoApi.Application",
+  "TodoApi.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/rezazeraat\/Projects\/task-management-system\/TodoApi\/TodoApi.Domain",
+  "TodoApi.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/rezazeraat\/Projects\/task-management-system\/TodoApi\/TodoApi.Infrastructure",
+  "TodoApi.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/rezazeraat\/Projects\/task-management-system\/TodoApi\/TodoApi.WebApi"
+}
