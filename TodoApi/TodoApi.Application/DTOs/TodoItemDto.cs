@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TodoApi.Application.DTOs
@@ -17,6 +18,7 @@ namespace TodoApi.Application.DTOs
         DateTime DueDate { get; }
         DateTime? CompletedDate { get; }
         int? AssignedToUserId { get; }
+        ICollection<TagDto> Tags { get; }
     }
 
     // Separate interface for handling priority-related operations
@@ -51,6 +53,7 @@ namespace TodoApi.Application.DTOs
         [Required]
         public PriorityLevelDto Priority { get; set; }
         public int? AssignedToUserId { get; set; }
+        public ICollection<TagDto> Tags { get; set; } = new List<TagDto>();
         // Additional properties and methods as needed
     }
 }

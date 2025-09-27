@@ -15,17 +15,37 @@ namespace TodoApi.Tests.E2E.Infrastructure
 {
     public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
-        private const string TestDatabaseName = "todoapi_test";
+        private readonly string _databaseName;
+
+        public CustomWebApplicationFactory()
+        {
+            // Generate a unique database name for each test run
+            _databaseName = $"todoapi_test_{Guid.NewGuid().ToString("N")}";
+        }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Testing");
 
-            // Use the testing configuration which has the test database connection
+            // Override the connection string to use a unique database
             builder.ConfigureAppConfiguration((context, config) =>
             {
-                // This will load appsettings.Testing.json
                 config.AddJsonFile("appsettings.Testing.json", optional: false, reloadOnChange: true);
+            });
+
+            builder.ConfigureServices(services =>
+            {
+                // Replace the DbContext with our unique database
+                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
+                if (descriptor != null)
+                {
+                    services.Remove(descriptor);
+                }
+
+                services.AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseNpgsql($"Host=localhost;Port=5432;Database={_databaseName};Username=postgres;Password=postgres");
+                });
             });
         }
 
@@ -37,7 +57,8 @@ namespace TodoApi.Tests.E2E.Infrastructure
             using var scope = host.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            // Ensure database exists and apply migrations
+            // Ensure database is clean and apply migrations
+            db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
             // Seed test data
@@ -51,8 +72,12 @@ namespace TodoApi.Tests.E2E.Infrastructure
             using var scope = Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            // Clean all data from tables but keep schema
-            await db.Database.ExecuteSqlRawAsync("TRUNCATE TABLE \"ActivityLogEntries\", \"Comments\", \"TodoItems\", \"Tags\", \"Users\" RESTART IDENTITY CASCADE");
+            // Close all connections to the database
+            await db.Database.ExecuteSqlRawAsync("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();");
+
+            // Drop and recreate the database
+            await db.Database.EnsureDeletedAsync();
+            await db.Database.EnsureCreatedAsync();
 
             // Reseed the database
             await DbSeeder.SeedAsync(db);

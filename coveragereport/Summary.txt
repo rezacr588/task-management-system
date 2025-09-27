@@ -1,0 +1,73 @@
+Summary
+  Generated on: 9/27/2025 - 2:01:06 PM
+  Coverage date: 9/27/2025 - 1:04:48 PM - 9/27/2025 - 1:34:45 PM
+  Parser: MultiReport (11x Cobertura)
+  Assemblies: 4
+  Classes: 45
+  Files: 41
+  Line coverage: 77.9%
+  Covered lines: 913
+  Uncovered lines: 259
+  Coverable lines: 1172
+  Total lines: 2307
+  Branch coverage: 65.6% (84 of 128)
+  Covered branches: 84
+  Total branches: 128
+  Method coverage: 86.6% (208 of 240)
+  Full method coverage: 79.5% (191 of 240)
+  Covered methods: 208
+  Fully covered methods: 191
+  Total methods: 240
+
+TodoApi.Application                                                          87.7%
+  TodoApi.Application.DTOs.ActivityLogDto                                     100%
+  TodoApi.Application.DTOs.CommentCreateRequest                               100%
+  TodoApi.Application.DTOs.CommentDto                                         100%
+  TodoApi.Application.DTOs.CommentUpdateRequest                               100%
+  TodoApi.Application.DTOs.TagDto                                             100%
+  TodoApi.Application.DTOs.TodoItemDto                                        100%
+  TodoApi.Application.DTOs.UserRegistrationDto                                100%
+  TodoApi.Application.DTOs.UserUpdateDto                                      100%
+  TodoApi.Application.Mappers.CollaborationProfile                            100%
+  TodoApi.Application.Mappers.TagProfile                                      100%
+  TodoApi.Application.Mappers.UserProfile                                     100%
+  TodoApi.Application.Mappings.TodoItemProfile                                100%
+  TodoApi.Application.Services.ActivityLogService                             100%
+  TodoApi.Application.Services.CommentService                                86.8%
+  TodoApi.Application.Services.TagService                                     100%
+  TodoApi.Application.Services.TagSuggestionService                            80%
+  TodoApi.Application.Services.TodoItemService                                 95%
+  TodoApi.Application.Services.UserService                                    100%
+  TodoApi.Domain.DTOs.UserDto                                                 100%
+  TodoApi.Infrastructure.Services.AuthorizationService                          0%
+  TodoApi.Infrastructure.Services.BiometricTokenValidator                       0%
+  TodoApi.Infrastructure.Services.JwtTokenGenerator                             0%
+
+TodoApi.Domain                                                               95.9%
+  TodoApi.Domain.Entities.ActivityLogEntry                                   81.8%
+  TodoApi.Domain.Entities.Comment                                             100%
+  TodoApi.Domain.Entities.Tag                                                 100%
+  TodoApi.Domain.Entities.TodoItem                                            100%
+  TodoApi.Domain.Entities.User                                                100%
+
+TodoApi.Infrastructure                                                       77.8%
+  FileLogger                                                                    0%
+  TodoApi.Infrastructure.Data.ApplicationDbContext                            100%
+  TodoApi.Infrastructure.Data.Configurations.ActivityLogEntryConfiguration    100%
+  TodoApi.Infrastructure.Data.Configurations.CommentConfiguration             100%
+  TodoApi.Infrastructure.Data.Configurations.TagConfiguration                 100%
+  TodoApi.Infrastructure.Data.Configurations.TodoItemConfiguration            100%
+  TodoApi.Infrastructure.Data.Configurations.UserConfiguration                100%
+  TodoApi.Infrastructure.Repositories.ActivityLogRepository                    74%
+  TodoApi.Infrastructure.Repositories.CommentRepository                      64.5%
+  TodoApi.Infrastructure.Repositories.TagRepository                          84.6%
+  TodoApi.Infrastructure.Repositories.TodoItemRepository                      100%
+  TodoApi.Infrastructure.Repositories.UserRepository                         48.6%
+
+TodoApi.WebApi                                                               57.8%
+  CommentsController                                                         43.1%
+  Program                                                                      67%
+  TagController                                                              30.9%
+  TodoApi.WebApi.Controllers.TagSuggestionsController                         100%
+  TodoItemsController                                                        79.7%
+  UserController                                                             45.7%

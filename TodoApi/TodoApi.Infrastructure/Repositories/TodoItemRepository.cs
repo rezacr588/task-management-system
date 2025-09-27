@@ -18,12 +18,16 @@ namespace TodoApi.Infrastructure.Repositories
 
         public async Task<TodoItem?> GetByIdAsync(int id)
         {
-            return await _context.TodoItems.FindAsync(id);
+            return await _context.TodoItems
+                .Include(t => t.Tags)
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<IEnumerable<TodoItem>> GetAllAsync()
         {
-            return await _context.TodoItems.ToListAsync();
+            return await _context.TodoItems
+                .Include(t => t.Tags)
+                .ToListAsync();
         }
 
         public async Task AddAsync(TodoItem todoItem)

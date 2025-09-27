@@ -58,3 +58,7 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/appsettings.Production.json
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/appsettings.Testing.json
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/HealthChecks.NpgSql.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/Azure.AI.TextAnalytics.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/Azure.Core.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/System.Memory.Data.dll

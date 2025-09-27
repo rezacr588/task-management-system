@@ -135,3 +135,7 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Unit/obj/Debug/net9.0/TodoApi.Tests.Unit.pdb
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Unit/obj/Debug/net9.0/TodoApi.Tests.Unit.genruntimeconfig.cache
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Unit/obj/Debug/net9.0/ref/TodoApi.Tests.Unit.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Unit/bin/Debug/net9.0/Azure.AI.TextAnalytics.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Unit/bin/Debug/net9.0/Azure.Core.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Unit/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.Unit/bin/Debug/net9.0/System.Memory.Data.dll

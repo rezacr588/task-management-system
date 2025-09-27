@@ -49,6 +49,22 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 
+// Register the new TagSuggestionService
+builder.Services.AddSingleton<ITagSuggestionService>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var endpoint = config["TextAnalytics:Endpoint"];
+    var apiKey = config["TextAnalytics:ApiKey"];
+
+    if (string.IsNullOrEmpty(endpoint) || endpoint.Contains("YOUR_"))
+    {
+        // Return a dummy implementation if not configured
+        return new TagSuggestionService(null, null, useDummy: true);
+    }
+
+    return new TagSuggestionService(endpoint, apiKey);
+});
+
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(CollaborationProfile).Assembly);
 
