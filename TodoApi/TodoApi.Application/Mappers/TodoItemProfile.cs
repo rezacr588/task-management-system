@@ -1,6 +1,7 @@
 using AutoMapper;
-using TodoApi.Domain.Entities;
 using TodoApi.Application.DTOs;
+using TodoApi.Domain.Entities;
+using TodoApi.Domain.Enums;
 
 namespace TodoApi.Application.Mappings
 {
@@ -8,6 +9,9 @@ namespace TodoApi.Application.Mappings
     {
         public TodoItemProfile()
         {
+            CreateMap<PriorityLevel, PriorityLevelDto>().ConvertUsing(src => (PriorityLevelDto)(int)src);
+            CreateMap<PriorityLevelDto, PriorityLevel>().ConvertUsing(src => (PriorityLevel)(int)src);
+
             // Map from TodoItem (Domain Model) to TodoItemDto (Data Transfer Object)
             CreateMap<TodoItem, TodoItemDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

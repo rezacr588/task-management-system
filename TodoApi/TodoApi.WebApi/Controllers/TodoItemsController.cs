@@ -1,6 +1,8 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using TodoApi.Application.Interfaces;
 using TodoApi.Application.DTOs;
+using TodoApi.Application.Interfaces;
 using TodoApi.Application.Services;
 
 [Route("api/[controller]")]
@@ -8,10 +10,12 @@ using TodoApi.Application.Services;
 public class TodoItemsController : ControllerBase
 {
     private readonly ITodoItemService _todoItemService;
+    private readonly ITagService _tagService;
 
-    public TodoItemsController(ITodoItemService todoItemService)
+    public TodoItemsController(ITodoItemService todoItemService, ITagService tagService)
     {
         _todoItemService = todoItemService;
+        _tagService = tagService;
     }
 
     // GET: api/TodoItems
@@ -30,14 +34,15 @@ public class TodoItemsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTodoItem(int id)
     {
-        var todoItem = await _todoItemService.GetTodoItemByIdAsync(id);
-
-        if (todoItem == null)
+        try
+        {
+            var todoItem = await _todoItemService.GetTodoItemByIdAsync(id);
+            return Ok(todoItem);
+        }
+        catch (KeyNotFoundException)
         {
             return NotFound();
         }
-
-        return Ok(todoItem);
     }
 
     // POST: api/TodoItems
@@ -62,17 +67,73 @@ public class TodoItemsController : ControllerBase
             return BadRequest();
         }
 
-        await _todoItemService.UpdateTodoItemAsync(id, todoItemDto);
-        return NoContent();
+        try
+        {
+            await _todoItemService.UpdateTodoItemAsync(id, todoItemDto);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     // DELETE: api/TodoItems/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTodoItem(int id)
     {
-        await _todoItemService.DeleteTodoItemAsync(id);
-        return NoContent();
+        try
+        {
+            await _todoItemService.DeleteTodoItemAsync(id);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     // Additional actions as needed
+
+    [HttpGet("{id}/tags")]
+    public async Task<IActionResult> GetTagsForTodo(int id)
+    {
+        try
+        {
+            var tags = await _tagService.GetTagsForTodoAsync(id);
+            return Ok(tags);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPost("{id}/tags/{tagId}")]
+    public async Task<IActionResult> AttachTagToTodo(int id, int tagId)
+    {
+        try
+        {
+            await _tagService.AttachTagToTodoAsync(id, tagId);
+            return NoContent();
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
+
+    [HttpDelete("{id}/tags/{tagId}")]
+    public async Task<IActionResult> DetachTagFromTodo(int id, int tagId)
+    {
+        try
+        {
+            await _tagService.DetachTagFromTodoAsync(id, tagId);
+            return NoContent();
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
 }

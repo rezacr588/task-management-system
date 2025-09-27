@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TodoApi.Infrastructure.Data; // Adjust this to your actual namespace
-using TodoApi.Application.Interfaces; // Adjust this to your actual namespace
-using TodoApi.Application.Services; // Adjust this to your actual namespace
 using Microsoft.OpenApi.Models;
-
+using TodoApi.Infrastructure.Data;
+using TodoApi.Application.Interfaces;
+using TodoApi.Application.Services;
 using TodoApi.Domain.Interfaces;
 using TodoApi.Infrastructure.Services;
 using TodoApi.Infrastructure.Repositories;
@@ -11,15 +10,36 @@ using TodoApi.Application.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the DI container.
+// Validate required configuration
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Database connection string 'DefaultConnection' is required but not configured.");
+}
+
+// Add database context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    options.UseNpgsql(connectionString);
+
+    // Enable sensitive data logging only in development
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+        options.EnableDetailedErrors();
+    }
+});
+
+// Add health checks
+builder.Services.AddHealthChecks()
+    .AddNpgSql(connectionString);
 
 // Add services to DI container
-builder.Services.AddScoped<IUserService,UserService>();
-builder.Services.AddScoped<ITodoItemService,TodoItemService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITodoItemService, TodoItemService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
+builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<ITokenValidator, BiometricTokenValidator>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
@@ -27,29 +47,62 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITodoItemRepository, TodoItemRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+
+// Add AutoMapper
 builder.Services.AddAutoMapper(typeof(CollaborationProfile).Assembly);
 
-// Add other scoped services
-builder.Services.AddControllers();
+// Add controllers with API behavior
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
 
-// Add Swagger/OpenAPI support
+// Configure API documentation
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Todo API",
+        Version = "v1",
+        Description = "A production-ready Todo API with full CRUD operations"
+    });
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
+        c.RoutePrefix = string.Empty; // Serve Swagger UI at root
+    });
+}
 
-
+// Security headers
 app.UseHttpsRedirection();
 
+// Health check endpoint
+app.MapHealthChecks("/health");
+
+// Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
+// Map controllers
 app.MapControllers();
+
+// Ensure database is created in development
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await context.Database.EnsureCreatedAsync();
+}
 
 app.Run();
 

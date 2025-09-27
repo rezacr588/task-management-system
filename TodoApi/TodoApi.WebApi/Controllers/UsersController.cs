@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
@@ -26,6 +28,10 @@ public class UserController : ControllerBase
         {
             var user = await _userService.CreateUserAsync(registrationDto);
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -83,27 +89,29 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
-        var user = await _userService.GetUserByIdAsync(id);
-
-        if (user == null)
+        try
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            return Ok(user);
+        }
+        catch (KeyNotFoundException)
         {
             return NotFound();
         }
-
-        return Ok(user);
     }
 
     // GET: api/User/ByEmail/{email}
     [HttpGet("ByEmail/{email}")]
     public async Task<IActionResult> GetUserByEmail(string email)
     {
-        var user = await _userService.GetUserByEmailAsync(email);
-
-        if (user == null)
+        try
+        {
+            var user = await _userService.GetUserByEmailAsync(email);
+            return Ok(user);
+        }
+        catch (KeyNotFoundException)
         {
             return NotFound();
         }
-
-        return Ok(user);
     }
 }

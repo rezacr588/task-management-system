@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  todoapi-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Host=postgres-dev;Port=5432;Database=todoapi_dev;Username=postgres;Password=postgres
+      - Jwt__Key=development-key-minimum-32-characters-long
+      - Jwt__Issuer=TodoApi.Development
+      - Jwt__Audience=TodoApi.Development
+    depends_on:
+      postgres-dev:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - ./TodoApi:/app/src:cached
+
+  postgres-dev:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: todoapi_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d todoapi_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  default:
+    name: todoapi-dev-network

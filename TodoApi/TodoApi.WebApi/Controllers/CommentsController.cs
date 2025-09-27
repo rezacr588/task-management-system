@@ -45,8 +45,15 @@ public class CommentsController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var comment = await _commentService.CreateCommentAsync(request);
-        return CreatedAtAction(nameof(GetComment), new { id = comment.Id }, comment);
+        try
+        {
+            var comment = await _commentService.CreateCommentAsync(request);
+            return CreatedAtAction(nameof(GetComment), new { id = comment.Id }, comment);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     [HttpPut("{id:int}")]

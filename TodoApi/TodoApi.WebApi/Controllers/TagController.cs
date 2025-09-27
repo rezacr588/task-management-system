@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
-// Include other necessary namespaces
 
 [Route("api/[controller]")]
 [ApiController]
@@ -31,14 +31,15 @@ public class TagController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTag(int id)
     {
-        var tag = await _tagService.GetTagByIdAsync(id);
-
-        if (tag == null)
+        try
+        {
+            var tag = await _tagService.GetTagByIdAsync(id);
+            return Ok(tag);
+        }
+        catch (KeyNotFoundException)
         {
             return NotFound();
         }
-
-        return Ok(tag);
     }
 
     // GET: api/Tag
@@ -58,16 +59,30 @@ public class TagController : ControllerBase
             return BadRequest("ID mismatch");
         }
 
-        await _tagService.UpdateTagAsync(id, tagDto);
-        return NoContent();
+        try
+        {
+            await _tagService.UpdateTagAsync(id, tagDto);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     // DELETE: api/Tag/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTag(int id)
     {
-        await _tagService.DeleteTagAsync(id);
-        return NoContent();
+        try
+        {
+            await _tagService.DeleteTagAsync(id);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     // Additional actions can be added here

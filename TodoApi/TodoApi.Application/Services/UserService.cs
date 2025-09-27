@@ -1,3 +1,4 @@
+using System;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using TodoApi.Application.DTOs;
@@ -9,7 +10,7 @@ using AutoMapper;
 
 namespace TodoApi.Application.Services
 {
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
@@ -24,7 +25,7 @@ namespace TodoApi.Application.Services
         {
             if (await UserExists(registrationModel.Email))
             {
-                throw new Exception("User with the given email already exists.");
+                throw new InvalidOperationException("User with the given email already exists.");
             }
 
             var passwordHash = HashPassword(registrationModel.Password);
@@ -61,7 +62,7 @@ namespace TodoApi.Application.Services
         }
 
         public async Task<UserDto> GetUserByIdAsync(int id)
-        {        
+        {
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
@@ -101,7 +102,7 @@ namespace TodoApi.Application.Services
             user.BiometricToken = updateModel.BiometricToken;
             user.Role = updateModel.Role;
 
-            _ = _userRepository.UpdateAsync(user);
+            await _userRepository.UpdateAsync(user);
         }
 
         public async Task DeleteUserAsync(int id)

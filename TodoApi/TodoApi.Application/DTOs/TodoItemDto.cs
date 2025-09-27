@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TodoApi.Application.DTOs
 {
     // Basic information required for listing todos
@@ -36,11 +38,17 @@ namespace TodoApi.Application.DTOs
     public class TodoItemDto : IDetailedTodoInfo, IPriorityInfo
     {
         public int Id { get; set; }
+        [Required]
+        [StringLength(100)]
         public string Title { get; set; } = string.Empty;
         public bool IsComplete { get; set; }
+        [Required]
+        [StringLength(500)]
         public string Description { get; set; } = string.Empty;
+        [Required]
         public DateTime DueDate { get; set; }
         public DateTime? CompletedDate { get; set; }
+        [Required]
         public PriorityLevelDto Priority { get; set; }
         public int? AssignedToUserId { get; set; }
         // Additional properties and methods as needed

@@ -11,5 +11,8 @@ namespace TodoApi.Application.Interfaces
         Task<IEnumerable<TagDto>> GetAllTagsAsync();
         Task UpdateTagAsync(int id, TagDto tagDto);
         Task DeleteTagAsync(int id);
+        Task<IEnumerable<TagDto>> GetTagsForTodoAsync(int todoItemId);
+        Task AttachTagToTodoAsync(int todoItemId, int tagId);
+        Task DetachTagFromTodoAsync(int todoItemId, int tagId);
     }
 }
