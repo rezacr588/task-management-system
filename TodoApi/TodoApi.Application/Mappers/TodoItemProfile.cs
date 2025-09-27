@@ -22,6 +22,7 @@ namespace TodoApi.Application.Mappings
                 .ForMember(dest => dest.CompletedDate, opt => opt.MapFrom(src => src.CompletedDate))
                 .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => src.Priority))
                 .ForMember(dest => dest.AssignedToUserId, opt => opt.MapFrom(src => src.AssignedToUserId))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 // Add other properties as necessary
                 .ReverseMap(); // If you need to map from TodoItemDto to TodoItem as well
 
@@ -36,6 +37,7 @@ namespace TodoApi.Application.Mappings
                 .ForMember(dest => dest.CompletedDate, opt => opt.MapFrom(src => src.CompletedDate))
                 .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => src.Priority))
                 .ForMember(dest => dest.AssignedToUserId, opt => opt.MapFrom(src => src.AssignedToUserId))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 // Add other properties as necessary
                 ;
         }

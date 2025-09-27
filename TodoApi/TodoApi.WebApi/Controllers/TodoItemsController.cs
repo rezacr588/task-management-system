@@ -35,15 +35,8 @@ public class TodoItemsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTodoItem(int id)
     {
-        try
-        {
-            var todoItem = await _todoItemService.GetTodoItemByIdAsync(id);
-            return Ok(todoItem);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var todoItem = await _todoItemService.GetTodoItemByIdAsync(id);
+        return Ok(todoItem);
     }
 
     // POST: api/TodoItems
@@ -68,30 +61,16 @@ public class TodoItemsController : ControllerBase
             return BadRequest();
         }
 
-        try
-        {
-            await _todoItemService.UpdateTodoItemAsync(id, todoItemDto);
-            return NoContent();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        await _todoItemService.UpdateTodoItemAsync(id, todoItemDto);
+        return NoContent();
     }
 
     // DELETE: api/TodoItems/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTodoItem(int id)
     {
-        try
-        {
-            await _todoItemService.DeleteTodoItemAsync(id);
-            return NoContent();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        await _todoItemService.DeleteTodoItemAsync(id);
+        return NoContent();
     }
 
     // Additional actions as needed
@@ -99,42 +78,21 @@ public class TodoItemsController : ControllerBase
     [HttpGet("{id}/tags")]
     public async Task<IActionResult> GetTagsForTodo(int id)
     {
-        try
-        {
-            var tags = await _tagService.GetTagsForTodoAsync(id);
-            return Ok(tags);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var tags = await _tagService.GetTagsForTodoAsync(id);
+        return Ok(tags);
     }
 
     [HttpPost("{id}/tags/{tagId}")]
     public async Task<IActionResult> AttachTagToTodo(int id, int tagId)
     {
-        try
-        {
-            await _tagService.AttachTagToTodoAsync(id, tagId);
-            return NoContent();
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        await _tagService.AttachTagToTodoAsync(id, tagId);
+        return NoContent();
     }
 
     [HttpDelete("{id}/tags/{tagId}")]
     public async Task<IActionResult> DetachTagFromTodo(int id, int tagId)
     {
-        try
-        {
-            await _tagService.DetachTagFromTodoAsync(id, tagId);
-            return NoContent();
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        await _tagService.DetachTagFromTodoAsync(id, tagId);
+        return NoContent();
     }
 }

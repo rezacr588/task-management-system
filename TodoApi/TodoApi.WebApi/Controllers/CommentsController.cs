@@ -27,15 +27,8 @@ public class CommentsController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetComment(int id)
     {
-        try
-        {
-            var comment = await _commentService.GetCommentByIdAsync(id);
-            return Ok(comment);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var comment = await _commentService.GetCommentByIdAsync(id);
+        return Ok(comment);
     }
 
     [HttpPost]
@@ -46,15 +39,8 @@ public class CommentsController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            var comment = await _commentService.CreateCommentAsync(request);
-            return CreatedAtAction(nameof(GetComment), new { id = comment.Id }, comment);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var comment = await _commentService.CreateCommentAsync(request);
+        return CreatedAtAction(nameof(GetComment), new { id = comment.Id }, comment);
     }
 
     [HttpPut("{id:int}")]
@@ -65,29 +51,15 @@ public class CommentsController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            var updated = await _commentService.UpdateCommentAsync(id, request);
-            return Ok(updated);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var updated = await _commentService.UpdateCommentAsync(id, request);
+        return Ok(updated);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteComment(int id)
     {
-        try
-        {
-            await _commentService.DeleteCommentAsync(id);
-            return NoContent();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        await _commentService.DeleteCommentAsync(id);
+        return NoContent();
     }
 
     [HttpGet("todo/{todoId:int}/activity")]

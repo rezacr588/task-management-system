@@ -8,6 +8,7 @@ using TodoApi.Infrastructure.Repositories;
 using TodoApi.Application.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using TodoApi.WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,7 @@ builder.Services.AddScoped<ITodoItemRepository, TodoItemRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<TodoApi.Domain.Services.IActivityLogger, TodoApi.Domain.Services.ActivityLogger>();
 
 // Register the new TagSuggestionService
 builder.Services.AddSingleton<ITagSuggestionService>(sp =>
@@ -77,10 +79,14 @@ builder.Services.AddSingleton<ITagSuggestionService>(sp =>
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(CollaborationProfile).Assembly);
 
+// Add MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TodoApi.Domain.Events.DomainEvent).Assembly));
+
 // Add controllers with API behavior
 builder.Services.AddControllers(options =>
 {
     options.SuppressAsyncSuffixInActionNames = false;
+    options.Filters.Add<GlobalExceptionFilter>();
 });
 
 // Configure API documentation

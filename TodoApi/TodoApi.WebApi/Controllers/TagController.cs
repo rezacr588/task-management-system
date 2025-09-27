@@ -32,15 +32,8 @@ public class TagController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTag(int id)
     {
-        try
-        {
-            var tag = await _tagService.GetTagByIdAsync(id);
-            return Ok(tag);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var tag = await _tagService.GetTagByIdAsync(id);
+        return Ok(tag);
     }
 
     // GET: api/Tag
@@ -60,30 +53,16 @@ public class TagController : ControllerBase
             return BadRequest("ID mismatch");
         }
 
-        try
-        {
-            await _tagService.UpdateTagAsync(id, tagDto);
-            return NoContent();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        await _tagService.UpdateTagAsync(id, tagDto);
+        return NoContent();
     }
 
     // DELETE: api/Tag/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTag(int id)
     {
-        try
-        {
-            await _tagService.DeleteTagAsync(id);
-            return NoContent();
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        await _tagService.DeleteTagAsync(id);
+        return NoContent();
     }
 
     // Additional actions can be added here

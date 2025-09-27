@@ -46,6 +46,9 @@ namespace TodoApi.Tests.E2E.Infrastructure
                 {
                     options.UseNpgsql($"Host=localhost;Port=5432;Database={_databaseName};Username=postgres;Password=postgres");
                 });
+
+                // Register domain services for testing
+                services.AddScoped<TodoApi.Domain.Services.IActivityLogger, TodoApi.Domain.Services.ActivityLogger>();
             });
         }
 

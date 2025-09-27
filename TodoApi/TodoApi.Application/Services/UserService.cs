@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
-using TodoApi.Domain.DTOs;
 using TodoApi.Domain.Entities;
 using AutoMapper;
 

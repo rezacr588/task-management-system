@@ -63,3 +63,5 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/System.Memory.Data.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/Microsoft.AspNetCore.Mvc.Versioning.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/MediatR.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/MediatR.Contracts.dll

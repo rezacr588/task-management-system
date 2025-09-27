@@ -10,6 +10,8 @@ using TodoApi.Application.Services;
 using TodoApi.Domain.Entities;
 using TodoApi.Domain.Enums;
 using TodoApi.Application.Interfaces;
+using TodoApi.Domain.Services;
+using MediatR;
 using Xunit;
 
 namespace TodoApi.Tests.Unit.Services
@@ -18,6 +20,8 @@ namespace TodoApi.Tests.Unit.Services
     {
         private readonly Mock<ITodoItemRepository> _todoRepositoryMock = new();
         private readonly Mock<IActivityLogRepository> _activityRepositoryMock = new();
+        private readonly Mock<IActivityLogger> _activityLoggerMock = new();
+        private readonly Mock<IMediator> _mediatorMock = new();
         private readonly IMapper _mapper;
         private readonly TodoItemService _service;
 
@@ -29,7 +33,7 @@ namespace TodoApi.Tests.Unit.Services
             });
             _mapper = mapperConfig.CreateMapper();
 
-            _service = new TodoItemService(_todoRepositoryMock.Object, _mapper, _activityRepositoryMock.Object);
+            _service = new TodoItemService(_todoRepositoryMock.Object, _mapper, _activityRepositoryMock.Object, _activityLoggerMock.Object, _mediatorMock.Object);
         }
 
         [Fact]
@@ -56,6 +60,18 @@ namespace TodoApi.Tests.Unit.Services
             _todoRepositoryMock.Setup(repo => repo.GetByIdAsync(existing.Id)).ReturnsAsync(existing);
             _todoRepositoryMock.Setup(repo => repo.UpdateAsync(existing)).Returns(Task.CompletedTask);
             _activityRepositoryMock.Setup(repo => repo.AddRangeAsync(It.IsAny<IEnumerable<ActivityLogEntry>>())).Returns(Task.CompletedTask);
+
+            // Setup activity logger to return some activities
+            var activities = new List<ActivityLogEntry>
+            {
+                new ActivityLogEntry { TodoItemId = 5, Summary = "Title changed", EventType = ActivityEventType.TaskUpdated },
+                new ActivityLogEntry { TodoItemId = 5, Summary = "Description changed", EventType = ActivityEventType.TaskUpdated },
+                new ActivityLogEntry { TodoItemId = 5, Summary = "Priority changed", EventType = ActivityEventType.TaskUpdated },
+                new ActivityLogEntry { TodoItemId = 5, Summary = "Due date changed", EventType = ActivityEventType.TaskUpdated },
+                new ActivityLogEntry { TodoItemId = 5, Summary = "Assignee changed", EventType = ActivityEventType.TaskUpdated },
+                new ActivityLogEntry { TodoItemId = 5, Summary = "Task completed", EventType = ActivityEventType.TaskCompleted }
+            };
+            _activityLoggerMock.Setup(logger => logger.GetActivityLogEntries(It.IsAny<TodoItem>(), It.IsAny<TodoItem>())).Returns(activities);
 
             var update = new TodoItemDto
             {
@@ -87,12 +103,19 @@ namespace TodoApi.Tests.Unit.Services
 
             _todoRepositoryMock.Setup(repo => repo.GetByIdAsync(todo.Id)).ReturnsAsync(todo);
             _todoRepositoryMock.Setup(repo => repo.UpdateAsync(todo)).Returns(Task.CompletedTask);
-            _activityRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<ActivityLogEntry>())).Returns(Task.CompletedTask);
+            _activityRepositoryMock.Setup(repo => repo.AddRangeAsync(It.IsAny<IEnumerable<ActivityLogEntry>>())).Returns(Task.CompletedTask);
+
+            // Setup activity logger to return completion activity
+            var activities = new List<ActivityLogEntry>
+            {
+                new ActivityLogEntry { TodoItemId = 10, Summary = "Task completed", EventType = ActivityEventType.TaskCompleted }
+            };
+            _activityLoggerMock.Setup(logger => logger.GetActivityLogEntries(It.IsAny<TodoItem>(), It.IsAny<TodoItem>())).Returns(activities);
 
             await _service.MarkTodoItemCompleteAsync(todo.Id, true);
 
             _todoRepositoryMock.Verify(repo => repo.UpdateAsync(todo), Times.Once);
-            _activityRepositoryMock.Verify(repo => repo.AddAsync(It.Is<ActivityLogEntry>(entry => entry.EventType == ActivityEventType.TaskCompleted)), Times.Once);
+            _activityRepositoryMock.Verify(repo => repo.AddRangeAsync(It.Is<IEnumerable<ActivityLogEntry>>(entries => entries.Any(e => e.EventType == ActivityEventType.TaskCompleted))), Times.Once);
         }
     }
 }

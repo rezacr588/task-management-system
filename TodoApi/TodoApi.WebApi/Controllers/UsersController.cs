@@ -50,69 +50,31 @@ public class UserController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            await _userService.UpdateUserAsync(id, userUpdateDto);
-            return NoContent(); // 204 No Content is often used for successful PUT requests
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (Exception ex)
-        {
-            // Handle specific exceptions if necessary
-            return BadRequest(ex.Message);
-        }
+        await _userService.UpdateUserAsync(id, userUpdateDto);
+        return NoContent(); // 204 No Content is often used for successful PUT requests
     }
 
     // DELETE: api/User/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        try
-        {
-            await _userService.DeleteUserAsync(id);
-            return NoContent(); // 204 No Content is often used for successful DELETE requests
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (Exception ex)
-        {
-            // Handle specific exceptions if necessary
-            return BadRequest(ex.Message);
-        }
+        await _userService.DeleteUserAsync(id);
+        return NoContent(); // 204 No Content is often used for successful DELETE requests
     }
 
     // GET: api/User/5
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
-        try
-        {
-            var user = await _userService.GetUserByIdAsync(id);
-            return Ok(user);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var user = await _userService.GetUserByIdAsync(id);
+        return Ok(user);
     }
 
     // GET: api/User/ByEmail/{email}
     [HttpGet("ByEmail/{email}")]
     public async Task<IActionResult> GetUserByEmail(string email)
     {
-        try
-        {
-            var user = await _userService.GetUserByEmailAsync(email);
-            return Ok(user);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
+        var user = await _userService.GetUserByEmailAsync(email);
+        return Ok(user);
     }
 }
