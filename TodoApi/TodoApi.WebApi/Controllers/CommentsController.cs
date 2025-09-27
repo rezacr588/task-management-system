@@ -4,7 +4,8 @@ using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
 public class CommentsController : ControllerBase
 {
     private readonly ICommentService _commentService;

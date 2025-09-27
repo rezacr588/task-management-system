@@ -14,3 +14,5 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/refint/TodoApi.Infrastructure.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/TodoApi.Infrastructure.pdb
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/ref/TodoApi.Infrastructure.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Application.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Application.pdb

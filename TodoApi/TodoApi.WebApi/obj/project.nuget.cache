@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "aYTLr36202Q=",
+  "dgSpecHash": "SnEMtVHoru8=",
   "success": true,
   "projectFilePath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/TodoApi.WebApi.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/9.0.0/microsoft.aspnetcore.authentication.jwtbearer.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.cryptography.internal/9.0.0/microsoft.aspnetcore.cryptography.internal.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/9.0.0/microsoft.aspnetcore.cryptography.keyderivation.9.0.0.nupkg.sha512",
+    "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.mvc.versioning/5.1.0/microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.openapi/9.0.0/microsoft.aspnetcore.openapi.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",

@@ -31,18 +31,18 @@ namespace TodoApi.Tests.E2E
                 EventType = ActivityEventType.CommentCreated
             };
 
-            var response = await client.PostAsJsonAsync("/api/Comments", payload);
+            var response = await client.PostAsJsonAsync("/api/v1/Comments", payload);
             response.EnsureSuccessStatusCode();
 
             var created = await response.Content.ReadFromJsonAsync<CommentDto>();
             created.Should().NotBeNull();
             created!.Content.Should().Be("E2E integration comment");
 
-            var list = await client.GetFromJsonAsync<List<CommentDto>>("/api/Comments/todo/1");
+            var list = await client.GetFromJsonAsync<List<CommentDto>>("/api/v1/Comments/todo/1");
             list.Should().NotBeNull();
             list!.Should().Contain(c => c.Content == "E2E integration comment");
 
-            var activity = await client.GetFromJsonAsync<List<ActivityLogDto>>("/api/Comments/todo/1/activity");
+            var activity = await client.GetFromJsonAsync<List<ActivityLogDto>>("/api/v1/Comments/todo/1/activity");
             activity.Should().NotBeNull();
             activity!.Should().NotBeEmpty();
             activity!.Should().Contain(a => a.EventType == ActivityEventType.CommentCreated);
@@ -61,7 +61,7 @@ namespace TodoApi.Tests.E2E
                 AuthorDisplayName = "Integration User"
             };
 
-            var response = await client.PostAsJsonAsync("/api/Comments", payload);
+            var response = await client.PostAsJsonAsync("/api/v1/Comments", payload);
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }

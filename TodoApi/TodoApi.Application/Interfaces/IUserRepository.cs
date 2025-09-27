@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TodoApi.Domain.Entities;
 
-namespace TodoApi.Domain.Interfaces
+namespace TodoApi.Application.Interfaces
 {
     public interface IUserRepository
     {

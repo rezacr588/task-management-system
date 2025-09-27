@@ -3,10 +3,11 @@ using Microsoft.OpenApi.Models;
 using TodoApi.Infrastructure.Data;
 using TodoApi.Application.Interfaces;
 using TodoApi.Application.Services;
-using TodoApi.Domain.Interfaces;
 using TodoApi.Infrastructure.Services;
 using TodoApi.Infrastructure.Repositories;
 using TodoApi.Application.Mappers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add health checks
 builder.Services.AddHealthChecks()
     .AddNpgSql(connectionString);
+
+// Add API versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+});
 
 // Add services to DI container
 builder.Services.AddScoped<IUserService, UserService>();

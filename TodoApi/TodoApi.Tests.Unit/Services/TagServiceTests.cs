@@ -5,7 +5,7 @@ using TodoApi.Application.DTOs;
 using TodoApi.Application.Mappers;
 using TodoApi.Application.Services;
 using TodoApi.Domain.Entities;
-using TodoApi.Domain.Interfaces;
+using TodoApi.Application.Interfaces;
 using Xunit;
 
 namespace TodoApi.Tests.Unit.Services

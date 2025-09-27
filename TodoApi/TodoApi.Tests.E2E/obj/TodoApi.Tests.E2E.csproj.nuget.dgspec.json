@@ -28,9 +28,6 @@
             "projectReferences": {
               "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
                 "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj"
-              },
-              "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj": {
-                "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/TodoApi.Infrastructure.csproj"
               }
             }
           }
@@ -177,6 +174,9 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
+              "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Application/TodoApi.Application.csproj": {
+                "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Application/TodoApi.Application.csproj"
+              },
               "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj": {
                 "projectPath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Domain/TodoApi.Domain.csproj"
               }
@@ -396,6 +396,10 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",

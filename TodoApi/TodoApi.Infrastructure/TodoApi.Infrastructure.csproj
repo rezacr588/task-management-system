@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\TodoApi.Application\TodoApi.Application.csproj" />
     <ProjectReference Include="..\TodoApi.Domain\TodoApi.Domain.csproj" />
   </ItemGroup>
 

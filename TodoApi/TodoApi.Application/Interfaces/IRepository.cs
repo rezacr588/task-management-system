@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace TodoApi.Domain.Interfaces
+namespace TodoApi.Application.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -14,6 +14,6 @@ namespace TodoApi.Domain.Interfaces
         Task AddAsync(T entity);
         void Update(T entity);
         Task RemoveAsync(T entity);
-        
+
     }
 }

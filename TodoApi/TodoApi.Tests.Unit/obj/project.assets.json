@@ -1051,8 +1051,7 @@
           "Microsoft.Extensions.Configuration": "9.0.0",
           "Microsoft.IdentityModel.Tokens": "8.0.1",
           "System.IdentityModel.Tokens.Jwt": "8.0.1",
-          "TodoApi.Domain": "1.0.0",
-          "TodoApi.Infrastructure": "1.0.0"
+          "TodoApi.Domain": "1.0.0"
         },
         "compile": {
           "bin/placeholder/TodoApi.Application.dll": {}
@@ -1077,6 +1076,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.0",
           "Microsoft.EntityFrameworkCore.Relational": "9.0.0",
+          "TodoApi.Application": "1.0.0",
           "TodoApi.Domain": "1.0.0"
         },
         "compile": {

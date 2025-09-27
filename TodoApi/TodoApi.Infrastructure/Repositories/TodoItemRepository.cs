@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Domain.Entities;
-using TodoApi.Domain.Interfaces;
+using TodoApi.Application.Interfaces;
 using TodoApi.Infrastructure.Data;
 
 namespace TodoApi.Infrastructure.Repositories

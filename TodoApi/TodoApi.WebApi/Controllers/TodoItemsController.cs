@@ -5,8 +5,9 @@ using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 using TodoApi.Application.Services;
 
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
 public class TodoItemsController : ControllerBase
 {
     private readonly ITodoItemService _todoItemService;

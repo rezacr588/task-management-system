@@ -7,7 +7,6 @@ using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 using TodoApi.Domain.Entities;
 using TodoApi.Domain.Enums;
-using TodoApi.Domain.Interfaces;
 
 namespace TodoApi.Application.Services
 {

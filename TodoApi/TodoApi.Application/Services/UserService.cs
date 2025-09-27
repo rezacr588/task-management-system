@@ -5,7 +5,6 @@ using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 using TodoApi.Domain.DTOs;
 using TodoApi.Domain.Entities;
-using TodoApi.Domain.Interfaces;
 using AutoMapper;
 
 namespace TodoApi.Application.Services

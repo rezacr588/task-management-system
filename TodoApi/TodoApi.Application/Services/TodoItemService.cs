@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using TodoApi.Application.DTOs;
-using TodoApi.Domain.Interfaces;
+using TodoApi.Application.Interfaces;
 using AutoMapper;
 using TodoApi.Domain.Entities;
 using TodoApi.Domain.Enums;

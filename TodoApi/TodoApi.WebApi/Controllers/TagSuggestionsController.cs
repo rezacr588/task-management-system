@@ -5,7 +5,8 @@ using TodoApi.Application.Interfaces;
 namespace TodoApi.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class TagSuggestionsController : ControllerBase
     {
         private readonly ITagSuggestionService _tagSuggestionService;

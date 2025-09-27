@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;

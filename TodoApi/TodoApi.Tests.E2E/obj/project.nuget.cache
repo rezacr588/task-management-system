@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HmZQHoGkqVc=",
+  "dgSpecHash": "izo7r57yn7A=",
   "success": true,
   "projectFilePath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/TodoApi.Tests.E2E.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.cryptography.internal/9.0.0/microsoft.aspnetcore.cryptography.internal.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/9.0.0/microsoft.aspnetcore.cryptography.keyderivation.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.mvc.testing/9.0.0/microsoft.aspnetcore.mvc.testing.9.0.0.nupkg.sha512",
+    "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.mvc.versioning/5.1.0/microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.openapi/9.0.0/microsoft.aspnetcore.openapi.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.aspnetcore.testhost/9.0.0/microsoft.aspnetcore.testhost.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
