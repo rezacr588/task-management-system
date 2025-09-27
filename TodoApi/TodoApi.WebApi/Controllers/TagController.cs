@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
+[Authorize]
 public class TagController : ControllerBase
 {
     private readonly ITagService _tagService;
@@ -30,6 +32,7 @@ public class TagController : ControllerBase
 
     // GET: api/Tag/5
     [HttpGet("{id}")]
+    [ResponseCache(Duration = 600, VaryByQueryKeys = new[] { "id" })]
     public async Task<IActionResult> GetTag(int id)
     {
         var tag = await _tagService.GetTagByIdAsync(id);
@@ -38,6 +41,7 @@ public class TagController : ControllerBase
 
     // GET: api/Tag
     [HttpGet]
+    [ResponseCache(Duration = 300)]
     public async Task<IActionResult> GetAllTags()
     {
         var tags = await _tagService.GetAllTagsAsync();

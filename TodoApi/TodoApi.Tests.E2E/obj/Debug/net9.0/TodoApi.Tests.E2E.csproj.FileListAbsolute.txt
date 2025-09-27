@@ -453,3 +453,8 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/Microsoft.AspNetCore.Mvc.Versioning.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/MediatR.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/MediatR.Contracts.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/FluentValidation.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/FluentValidation.AspNetCore.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/FluentValidation.DependencyInjectionExtensions.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/AspNetCoreRateLimit.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Tests.E2E/bin/Debug/net9.0/TodoApi.WebApi.xml

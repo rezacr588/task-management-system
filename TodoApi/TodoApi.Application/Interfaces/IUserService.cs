@@ -19,6 +19,9 @@ namespace TodoApi.Application.Interfaces
         // Method to delete a user
         Task DeleteUserAsync(int id);
 
+        // Method to authenticate a user and return a JWT token
+        Task<LoginResponseDto> LoginAsync(LoginDto loginDto);
+
         // Additional methods can be declared here as needed
     }
 }

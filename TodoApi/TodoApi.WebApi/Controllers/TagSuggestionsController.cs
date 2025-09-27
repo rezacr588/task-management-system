@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using TodoApi.Application.Interfaces;
 
 namespace TodoApi.WebApi.Controllers
@@ -7,6 +8,7 @@ namespace TodoApi.WebApi.Controllers
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
+    [Authorize]
     public class TagSuggestionsController : ControllerBase
     {
         private readonly ITagSuggestionService _tagSuggestionService;

@@ -12,11 +12,13 @@ namespace TodoApi.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly ITokenGenerator _tokenGenerator;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper, ITokenGenerator tokenGenerator)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _tokenGenerator = tokenGenerator;
         }
 
         public async Task<UserDto> CreateUserAsync(UserRegistrationDto registrationModel)
@@ -57,6 +59,14 @@ namespace TodoApi.Application.Services
                 prf: KeyDerivationPrf.HMACSHA256,
                 iterationCount: 100000,
                 numBytesRequested: 256 / 8));
+        }
+
+        private bool VerifyPassword(string password, string hashedPassword)
+        {
+            // For simplicity, we'll use a basic comparison
+            // In a real application, you'd store the salt separately and use it for verification
+            var hashToVerify = HashPassword(password);
+            return hashToVerify == hashedPassword;
         }
 
         public async Task<UserDto> GetUserByIdAsync(int id)
@@ -112,6 +122,30 @@ namespace TodoApi.Application.Services
             }
 
             await _userRepository.DeleteAsync(user);
+        }
+
+        public async Task<LoginResponseDto> LoginAsync(LoginDto loginDto)
+        {
+            var user = await _userRepository.GetByEmailAsync(loginDto.Email);
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException("Invalid email or password.");
+            }
+
+            if (!VerifyPassword(loginDto.Password, user.PasswordHash))
+            {
+                throw new UnauthorizedAccessException("Invalid email or password.");
+            }
+
+            var token = _tokenGenerator.GenerateToken(user);
+            var userDto = _mapper.Map<UserDto>(user);
+
+            return new LoginResponseDto
+            {
+                Token = token,
+                User = userDto,
+                ExpiresAt = DateTime.UtcNow.AddHours(1)
+            };
         }
     }
 }

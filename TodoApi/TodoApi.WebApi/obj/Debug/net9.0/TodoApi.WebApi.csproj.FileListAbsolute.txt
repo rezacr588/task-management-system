@@ -65,3 +65,10 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/Microsoft.AspNetCore.Mvc.Versioning.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/MediatR.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/MediatR.Contracts.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/FluentValidation.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/FluentValidation.AspNetCore.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/FluentValidation.DependencyInjectionExtensions.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/AspNetCoreRateLimit.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/Newtonsoft.Json.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/bin/Debug/net9.0/TodoApi.WebApi.xml
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/obj/Debug/net9.0/TodoApi.WebApi.xml

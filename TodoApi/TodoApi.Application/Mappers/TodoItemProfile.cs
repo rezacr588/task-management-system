@@ -24,7 +24,7 @@ namespace TodoApi.Application.Mappings
                 .ForMember(dest => dest.AssignedToUserId, opt => opt.MapFrom(src => src.AssignedToUserId))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 // Add other properties as necessary
-                .ReverseMap(); // If you need to map from TodoItemDto to TodoItem as well
+                ; // Removed .ReverseMap() to avoid automatic mapping of Links property
 
             // Create reverse mapping if necessary
             // This is useful for scenarios like creating/updating TodoItem from TodoItemDto

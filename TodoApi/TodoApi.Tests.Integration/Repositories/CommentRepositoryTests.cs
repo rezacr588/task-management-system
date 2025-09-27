@@ -28,6 +28,26 @@ namespace TodoApi.Tests.Integration.Repositories
         }
 
         [Fact]
+        public async Task GetByIdAsync_ShouldReturnComment_WhenExists()
+        {
+            // Act
+            var comment = await _repository.GetByIdAsync(1);
+
+            // Assert
+            comment.Should().NotBeNull();
+            comment.Content.Should().Be("First comment");
+            comment.Author.Should().NotBeNull();
+            comment.TodoItem.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task GetByIdAsync_ShouldThrowKeyNotFoundException_WhenDoesNotExist()
+        {
+            // Act & Assert
+            await Assert.ThrowsAsync<KeyNotFoundException>(() => _repository.GetByIdAsync(999));
+        }
+
+        [Fact]
         public async Task GetByTodoItemIdAsync_ShouldReturnCommentsInDescendingOrder()
         {
             // Act
@@ -36,6 +56,16 @@ namespace TodoApi.Tests.Integration.Repositories
             // Assert
             comments.Should().HaveCount(2);
             comments.First().Content.Should().Be("Second comment");
+        }
+
+        [Fact]
+        public async Task GetByTodoItemIdAsync_ShouldReturnEmptyList_WhenNoComments()
+        {
+            // Act
+            var comments = await _repository.GetByTodoItemIdAsync(999);
+
+            // Assert
+            comments.Should().BeEmpty();
         }
 
         [Fact]
@@ -56,6 +86,18 @@ namespace TodoApi.Tests.Integration.Repositories
             var stored = await _context.Comments.FindAsync(comment.Id);
             stored.Should().NotBeNull();
             stored!.Content.Should().Be("New comment");
+        }
+
+        [Fact]
+        public async Task UpdateAsync_ShouldModifyComment()
+        {
+            var comment = await _context.Comments.FindAsync(1);
+            comment!.Content = "Updated comment";
+
+            await _repository.UpdateAsync(comment);
+
+            var updated = await _context.Comments.FindAsync(1);
+            updated!.Content.Should().Be("Updated comment");
         }
 
         [Fact]

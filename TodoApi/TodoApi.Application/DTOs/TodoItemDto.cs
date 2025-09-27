@@ -54,6 +54,7 @@ namespace TodoApi.Application.DTOs
         public PriorityLevelDto Priority { get; set; }
         public int? AssignedToUserId { get; set; }
         public ICollection<TagDto> Tags { get; set; } = new List<TagDto>();
+        public List<Link> Links { get; set; } = new List<Link>();
         // Additional properties and methods as needed
     }
 }

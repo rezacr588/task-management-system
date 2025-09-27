@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
+[Authorize]
 public class CommentsController : ControllerBase
 {
     private readonly ICommentService _commentService;
@@ -18,6 +20,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpGet("todo/{todoId:int}")]
+    [ResponseCache(Duration = 300, VaryByQueryKeys = new[] { "todoId" })]
     public async Task<IActionResult> GetCommentsForTodo(int todoId)
     {
         var comments = await _commentService.GetCommentsForTodoAsync(todoId);
@@ -25,6 +28,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [ResponseCache(Duration = 600, VaryByQueryKeys = new[] { "id" })]
     public async Task<IActionResult> GetComment(int id)
     {
         var comment = await _commentService.GetCommentByIdAsync(id);

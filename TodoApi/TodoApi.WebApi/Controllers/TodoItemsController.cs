@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 using TodoApi.Application.Services;
+using TodoApi.Domain.Enums;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
+[Authorize]
 public class TodoItemsController : ControllerBase
 {
     private readonly ITodoItemService _todoItemService;
@@ -21,18 +24,24 @@ public class TodoItemsController : ControllerBase
 
     // GET: api/TodoItems
     [HttpGet]
-    public async Task<IActionResult> GetAllTodoItems()
+    [ResponseCache(Duration = 300, VaryByQueryKeys = new[] { "pageNumber", "pageSize" })]
+    public async Task<IActionResult> GetAllTodoItems([FromQuery] int? pageNumber, [FromQuery] int? pageSize)
     {
+        if (pageNumber.HasValue && pageSize.HasValue)
+        {
+            // Return paginated results
+            var paginatedResult = await _todoItemService.GetTodoItemsPaginatedAsync(pageNumber.Value, pageSize.Value);
+            return Ok(paginatedResult);
+        }
 
-        var todoItems = await _todoItemService.GetAllTodoItemsAsync(
-            filter: null
-        );
-
+        // Return all results (existing behavior)
+        var todoItems = await _todoItemService.GetAllTodoItemsAsync(filter: null);
         return Ok(todoItems);
     }
 
     // GET: api/TodoItems/5
     [HttpGet("{id}")]
+    [ResponseCache(Duration = 600, VaryByQueryKeys = new[] { "id" })]
     public async Task<IActionResult> GetTodoItem(int id)
     {
         var todoItem = await _todoItemService.GetTodoItemByIdAsync(id);

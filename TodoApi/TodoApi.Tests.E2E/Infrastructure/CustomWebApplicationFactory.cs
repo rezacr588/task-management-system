@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using TodoApi.Infrastructure.Data;
 
 namespace TodoApi.Tests.E2E.Infrastructure
@@ -45,6 +46,17 @@ namespace TodoApi.Tests.E2E.Infrastructure
                 services.AddDbContext<ApplicationDbContext>(options =>
                 {
                     options.UseNpgsql($"Host=localhost;Port=5432;Database={_databaseName};Username=postgres;Password=postgres");
+                });
+
+                // Disable response caching for tests
+                services.AddControllers(options =>
+                {
+                    // Remove or modify response cache filters
+                    var cacheFilters = options.Filters.Where(f => f is ResponseCacheAttribute).ToList();
+                    foreach (var filter in cacheFilters)
+                    {
+                        options.Filters.Remove(filter);
+                    }
                 });
 
                 // Register domain services for testing

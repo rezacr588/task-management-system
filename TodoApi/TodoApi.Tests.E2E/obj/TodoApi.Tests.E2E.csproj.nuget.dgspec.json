@@ -393,6 +393,10 @@
               "target": "Package",
               "version": "[8.0.1, )"
             },
+            "AspNetCoreRateLimit": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"

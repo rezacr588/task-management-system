@@ -9,6 +9,15 @@ using TodoApi.Application.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using TodoApi.WebApi.Filters;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using TodoApi.WebApi.HealthChecks;
+using AspNetCoreRateLimit;
+using Microsoft.OpenApi;
+using System.IO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,9 +41,47 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     }
 });
 
+// Add JWT Authentication
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new InvalidOperationException("JWT Key is required but not configured. Please set 'Jwt:Key' in configuration.");
+}
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+builder.Services.AddAuthorization();
+
 // Add health checks
 builder.Services.AddHealthChecks()
-    .AddNpgSql(connectionString);
+    .AddNpgSql(connectionString, name: "database", tags: new[] { "db", "sql" })
+    .AddCheck<ApplicationHealthCheck>("application", tags: new[] { "app" });
+
+// Add rate limiting
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 
 // Add API versioning
 builder.Services.AddApiVersioning(options =>
@@ -79,6 +126,11 @@ builder.Services.AddSingleton<ITagSuggestionService>(sp =>
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(CollaborationProfile).Assembly);
 
+// Add FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssembly(typeof(TodoApi.Application.Validators.TodoItemDtoValidator).Assembly);
+
 // Add MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TodoApi.Domain.Events.DomainEvent).Assembly));
 
@@ -87,7 +139,11 @@ builder.Services.AddControllers(options =>
 {
     options.SuppressAsyncSuffixInActionNames = false;
     options.Filters.Add<GlobalExceptionFilter>();
-});
+})
+.AddXmlDataContractSerializerFormatters(); // Add XML content negotiation
+
+// Add response caching
+builder.Services.AddResponseCaching();
 
 // Configure API documentation
 builder.Services.AddEndpointsApiExplorer();
@@ -97,7 +153,49 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Todo API",
         Version = "v1",
-        Description = "A production-ready Todo API with full CRUD operations"
+        Description = "A production-ready Todo API with full CRUD operations, JWT authentication, and comprehensive task management features",
+        Contact = new OpenApiContact
+        {
+            Name = "Todo API Support",
+            Email = "support@todoapi.com"
+        },
+        License = new OpenApiLicense
+        {
+            Name = "MIT License"
+        }
+    });
+
+    // Include XML comments
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
+
+    // Add JWT Bearer token support
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
     });
 });
 
@@ -117,8 +215,26 @@ if (app.Environment.IsDevelopment())
 // Security headers
 app.UseHttpsRedirection();
 
+// Rate limiting
+app.UseIpRateLimiting();
+
+// HTTPS enforcement
+app.UseHttpsRedirection();
+app.UseHsts();
+
+// Response caching
+app.UseResponseCaching();
+
 // Health check endpoint
 app.MapHealthChecks("/health");
+app.MapHealthChecks("/health/database", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("db")
+});
+app.MapHealthChecks("/health/application", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("app")
+});
 
 // Authentication & Authorization
 app.UseAuthentication();

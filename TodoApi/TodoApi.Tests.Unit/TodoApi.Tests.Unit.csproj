@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageReference Include="Moq" Version="4.20.70" />
@@ -28,5 +29,6 @@
     <ProjectReference Include="../TodoApi.Application/TodoApi.Application.csproj" />
     <ProjectReference Include="../TodoApi.Domain/TodoApi.Domain.csproj" />
     <ProjectReference Include="../TodoApi.Infrastructure/TodoApi.Infrastructure.csproj" />
+    <ProjectReference Include="../TodoApi.WebApi/TodoApi.WebApi.csproj" />
   </ItemGroup>
 </Project>

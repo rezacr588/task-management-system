@@ -34,7 +34,20 @@ namespace TodoApi.Application.Services
         {
             var tItem = _mapper.Map<TodoItem>(todoItem);
             await _todoItemRepository.AddAsync(tItem);
-            return _mapper.Map<TodoItemDto>(tItem);
+
+            // Log task creation activity
+            var activityEntry = new ActivityLogEntry
+            {
+                TodoItemId = tItem.Id,
+                Summary = "Task created",
+                Details = $"Task '{tItem.Title}' was created",
+                EventType = ActivityEventType.TaskCreated
+            };
+            await _activityLogRepository.AddAsync(activityEntry);
+
+            var dto = _mapper.Map<TodoItemDto>(tItem);
+            HateoasHelper.AddTodoItemLinks(dto);
+            return dto;
         }
 
         public async Task<TodoItemDto> GetTodoItemByIdAsync(int id)
@@ -45,13 +58,43 @@ namespace TodoApi.Application.Services
                 throw new KeyNotFoundException("Todo item not found.");
             }
 
-            return _mapper.Map<TodoItemDto>(todoItem);
+            var dto = _mapper.Map<TodoItemDto>(todoItem);
+            HateoasHelper.AddTodoItemLinks(dto);
+            return dto;
         }
 
         public async Task<IEnumerable<TodoItemDto>> GetAllTodoItemsAsync(Expression<Func<TodoItemDto, bool>>? filter)
         {
             var todoItems = await _todoItemRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<TodoItemDto>>(todoItems);
+        }
+
+        public async Task<PaginatedResponse<TodoItemDto>> GetTodoItemsPaginatedAsync(int pageNumber = 1, int pageSize = 10)
+        {
+            var todoItems = await _todoItemRepository.GetAllAsync();
+            var totalCount = todoItems.Count();
+
+            var paginatedItems = todoItems
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
+
+            var dtoItems = _mapper.Map<List<TodoItemDto>>(paginatedItems);
+
+            // Add HATEOAS links to each item
+            foreach (var item in dtoItems)
+            {
+                HateoasHelper.AddTodoItemLinks(item);
+            }
+
+            var response = new PaginatedResponse<TodoItemDto>(dtoItems, pageNumber, pageSize, totalCount);
+
+            // Add collection-level HATEOAS links
+            if (dtoItems.Count > 0)
+            {
+                HateoasHelper.AddTodoItemsCollectionLinks(dtoItems, pageNumber, pageSize, totalCount);
+            }
+
+            return response;
         }
 
         public async Task UpdateTodoItemAsync(int id, TodoItemDto updatedTodoItem)

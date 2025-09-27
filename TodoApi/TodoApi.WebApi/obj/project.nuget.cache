@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "B5af9l1dY/8=",
+  "dgSpecHash": "tFGKg85fPHo=",
   "success": true,
   "projectFilePath": "/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.WebApi/TodoApi.WebApi.csproj",
   "expectedPackageFiles": [
     "/Users/rezazeraat/.nuget/packages/aspnetcore.healthchecks.npgsql/8.0.1/aspnetcore.healthchecks.npgsql.8.0.1.nupkg.sha512",
+    "/Users/rezazeraat/.nuget/packages/aspnetcoreratelimit/5.0.0/aspnetcoreratelimit.5.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/azure.ai.textanalytics/5.3.0/azure.ai.textanalytics.5.3.0.nupkg.sha512",
@@ -48,6 +49,7 @@
     "/Users/rezazeraat/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/8.0.1/microsoft.identitymodel.protocols.openidconnect.8.0.1.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.identitymodel.tokens/8.0.1/microsoft.identitymodel.tokens.8.0.1.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512",
+    "/Users/rezazeraat/.nuget/packages/newtonsoft.json/13.0.2/newtonsoft.json.13.0.2.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/npgsql/9.0.0/npgsql.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.0/npgsql.entityframeworkcore.postgresql.9.0.0.nupkg.sha512",
     "/Users/rezazeraat/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
