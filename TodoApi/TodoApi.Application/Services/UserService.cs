@@ -1,6 +1,5 @@
 using System;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Identity;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
 using TodoApi.Domain.Entities;
@@ -13,12 +12,18 @@ namespace TodoApi.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly ITokenGenerator _tokenGenerator;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, ITokenGenerator tokenGenerator)
+        public UserService(
+            IUserRepository userRepository,
+            IMapper mapper,
+            ITokenGenerator tokenGenerator,
+            IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _tokenGenerator = tokenGenerator;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<UserDto> CreateUserAsync(UserRegistrationDto registrationModel)
@@ -28,45 +33,20 @@ namespace TodoApi.Application.Services
                 throw new InvalidOperationException("User with the given email already exists.");
             }
 
-            var passwordHash = HashPassword(registrationModel.Password);
-
             var user = new User
             {
                 Name = registrationModel.Name,
                 Email = registrationModel.Email,
-                PasswordHash = passwordHash,
+                PasswordHash = string.Empty,
                 BiometricToken = registrationModel.BiometricToken,
                 Role = registrationModel.Role,
                 CreatedAt = DateTime.UtcNow
             };
 
+            user.PasswordHash = _passwordHasher.HashPassword(user, registrationModel.Password);
+
             await _userRepository.AddAsync(user);
             return _mapper.Map<UserDto>(user); // Return a DTO instead of the entity
-        }
-
-        private string HashPassword(string password)
-        {
-            // Password hashing logic remains the same
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-
-            return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100000,
-                numBytesRequested: 256 / 8));
-        }
-
-        private bool VerifyPassword(string password, string hashedPassword)
-        {
-            // For simplicity, we'll use a basic comparison
-            // In a real application, you'd store the salt separately and use it for verification
-            var hashToVerify = HashPassword(password);
-            return hashToVerify == hashedPassword;
         }
 
         public async Task<UserDto> GetUserByIdAsync(int id)
@@ -110,6 +90,11 @@ namespace TodoApi.Application.Services
             user.BiometricToken = updateModel.BiometricToken;
             user.Role = updateModel.Role;
 
+            if (!string.IsNullOrWhiteSpace(updateModel.Password))
+            {
+                user.PasswordHash = _passwordHasher.HashPassword(user, updateModel.Password);
+            }
+
             await _userRepository.UpdateAsync(user);
         }
 
@@ -132,7 +117,8 @@ namespace TodoApi.Application.Services
                 throw new UnauthorizedAccessException("Invalid email or password.");
             }
 
-            if (!VerifyPassword(loginDto.Password, user.PasswordHash))
+            var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
+            if (verificationResult == PasswordVerificationResult.Failed)
             {
                 throw new UnauthorizedAccessException("Invalid email or password.");
             }

@@ -31,16 +31,18 @@ public class TaskManagementSteps
         var registerRequest = new UserRegistrationDto
         {
             Email = "test@example.com",
-            Password = "password123",
-            Name = "Test User"
+            Password = "Password123!",
+            Name = "Test User",
+            BiometricToken = "test-biometric-token",
+            Role = "User"
         };
 
-        var registerResponse = await _client.PostAsJsonAsync("/api/users/register", registerRequest);
+        var registerResponse = await _client.PostAsJsonAsync("/api/v1/User/register", registerRequest);
         registerResponse.StatusCode.Should().Be(HttpStatusCode.Created);
 
         // Login to get token
-        var loginRequest = new { Email = "test@example.com", Password = "password123" };
-        var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", loginRequest);
+        var loginRequest = new { Email = "test@example.com", Password = "Password123!" };
+        var loginResponse = await _client.PostAsJsonAsync("/api/v1/User/login", loginRequest);
         loginResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var loginResult = await loginResponse.Content.ReadFromJsonAsync<dynamic>();
@@ -59,7 +61,7 @@ public class TaskManagementSteps
             Description = description
         };
 
-        _response = await _client.PostAsJsonAsync("/api/todoitems", createRequest);
+        _response = await _client.PostAsJsonAsync("/api/v1/TodoItems", createRequest);
         if (_response.IsSuccessStatusCode)
         {
             _createdTask = await _response.Content.ReadFromJsonAsync<TodoItemDto>();
@@ -93,7 +95,7 @@ public class TaskManagementSteps
     [When(@"I request all my tasks")]
     public async Task WhenIRequestAllMyTasks()
     {
-        _response = await _client.GetAsync("/api/todoitems");
+        _response = await _client.GetAsync("/api/v1/TodoItems");
         if (_response.IsSuccessStatusCode)
         {
             _tasks = await _response.Content.ReadFromJsonAsync<List<TodoItemDto>>();
@@ -124,7 +126,7 @@ public class TaskManagementSteps
             IsComplete = _createdTask!.IsComplete
         };
 
-        _response = await _client.PutAsJsonAsync($"/api/todoitems/{_createdTask.Id}", updateRequest);
+        _response = await _client.PutAsJsonAsync($"/api/v1/TodoItems/{_createdTask.Id}", updateRequest);
         if (_response.IsSuccessStatusCode)
         {
             _createdTask = await _response.Content.ReadFromJsonAsync<TodoItemDto>();
@@ -159,7 +161,7 @@ public class TaskManagementSteps
             IsComplete = true
         };
 
-        _response = await _client.PutAsJsonAsync($"/api/todoitems/{_createdTask!.Id}", updateRequest);
+        _response = await _client.PutAsJsonAsync($"/api/v1/TodoItems/{_createdTask!.Id}", updateRequest);
         if (_response.IsSuccessStatusCode)
         {
             _createdTask = await _response.Content.ReadFromJsonAsync<TodoItemDto>();
@@ -181,7 +183,7 @@ public class TaskManagementSteps
     [When(@"I delete the task")]
     public async Task WhenIDeleteTheTask()
     {
-        _response = await _client.DeleteAsync($"/api/todoitems/{_createdTask!.Id}");
+        _response = await _client.DeleteAsync($"/api/v1/TodoItems/{_createdTask!.Id}");
     }
 
     [Then(@"the task should be deleted successfully")]
@@ -193,7 +195,7 @@ public class TaskManagementSteps
     [Then(@"the task should no longer exist")]
     public async Task ThenTheTaskShouldNoLongerExist()
     {
-        var getResponse = await _client.GetAsync($"/api/todoitems/{_createdTask!.Id}");
+        var getResponse = await _client.GetAsync($"/api/v1/TodoItems/{_createdTask!.Id}");
         getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
@@ -204,8 +206,8 @@ public class TaskManagementSteps
         var tag1Request = new { Name = tag1 };
         var tag2Request = new { Name = tag2 };
 
-        await _client.PostAsJsonAsync("/api/tags", tag1Request);
-        await _client.PostAsJsonAsync("/api/tags", tag2Request);
+        await _client.PostAsJsonAsync("/api/v1/Tag", tag1Request);
+        await _client.PostAsJsonAsync("/api/v1/Tag", tag2Request);
     }
 
     [When(@"I assign the tags to the task")]
@@ -219,7 +221,7 @@ public class TaskManagementSteps
             TagIds = new[] { 1, 2 }
         };
 
-        _response = await _client.PutAsJsonAsync($"/api/todoitems/{_createdTask!.Id}", updateRequest);
+        _response = await _client.PutAsJsonAsync($"/api/v1/TodoItems/{_createdTask!.Id}", updateRequest);
         if (_response.IsSuccessStatusCode)
         {
             _createdTask = await _response.Content.ReadFromJsonAsync<TodoItemDto>();

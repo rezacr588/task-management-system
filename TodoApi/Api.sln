@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApi.Tests.E2E", "TodoAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApi.Tests.BDD", "TodoApi.Tests.BDD\TodoApi.Tests.BDD.csproj", "{2706CE7F-A859-44F8-BFAE-552512BCC86B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApi.Tests.Performance", "TodoApi.Tests.Performance\TodoApi.Tests.Performance.csproj", "{63494C19-3190-4947-8DE9-676C55140E37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,18 @@ Global
 		{2706CE7F-A859-44F8-BFAE-552512BCC86B}.Release|x64.Build.0 = Release|Any CPU
 		{2706CE7F-A859-44F8-BFAE-552512BCC86B}.Release|x86.ActiveCfg = Release|Any CPU
 		{2706CE7F-A859-44F8-BFAE-552512BCC86B}.Release|x86.Build.0 = Release|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Debug|x64.Build.0 = Debug|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Debug|x86.Build.0 = Debug|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Release|x64.ActiveCfg = Release|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Release|x64.Build.0 = Release|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Release|x86.ActiveCfg = Release|Any CPU
+		{63494C19-3190-4947-8DE9-676C55140E37}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

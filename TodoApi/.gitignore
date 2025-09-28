@@ -1,0 +1,31 @@
+# .NET
+bin/
+obj/
+*.user
+*.tmp
+*.temp
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+coverage/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+appsettings.Development.json

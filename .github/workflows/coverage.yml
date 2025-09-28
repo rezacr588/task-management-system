@@ -1,0 +1,147 @@
+name: Code Coverage Report
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM UTC
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: todoapi_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Needed for GitVersion and coverage history
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Cache .NET packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Restore dependencies
+      run: |
+        cd TodoApi
+        dotnet restore
+
+    - name: Build
+      run: |
+        cd TodoApi
+        dotnet build --configuration Release --no-restore
+
+    - name: Install ReportGenerator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+    - name: Run Tests with Coverage
+      env:
+        ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=todoapi_test;Username=postgres;Password=postgres"
+        Jwt__Key: "test-secret-key-for-jwt-token-generation-in-ci-cd-pipeline-must-be-at-least-32-characters-long"
+        Jwt__Issuer: "TodoApi"
+        Jwt__Audience: "TodoApi"
+        TextAnalytics__Endpoint: "https://test-endpoint.cognitiveservices.azure.com/"
+        TextAnalytics__ApiKey: "test-api-key"
+      run: |
+        cd TodoApi
+        chmod +x coverage-report.sh
+        ./coverage-report.sh || exit 0  # Don't fail on coverage threshold for now
+
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./TodoApi/TestResults/**/coverage.cobertura.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+    - name: Comment Coverage on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          
+          try {
+            const summaryPath = './coveragereport/coverage-summary.json';
+            if (fs.existsSync(summaryPath)) {
+              const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
+              
+              const comment = `## 📊 Code Coverage Report
+              
+              **Overall Coverage:** ${summary.coverage}%
+              
+              ![Coverage Badge](${summary.badge_url})
+              
+              **Commit:** ${summary.commit}
+              **Timestamp:** ${summary.timestamp}
+              
+              [View Full Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              `;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
+          } catch (error) {
+            console.log('Could not post coverage comment:', error);
+          }
+
+    - name: Upload Coverage Report Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report-${{ github.run_number }}
+        path: |
+          coveragereport/
+          TodoApi/TestResults/
+        retention-days: 30
+
+    - name: Update Coverage Badge
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # This would typically update a badge in the README or generate a badge file
+        echo "Coverage badge would be updated here"
+        
+    - name: Coverage Threshold Check
+      run: |
+        cd TodoApi
+        if [ -f "../coveragereport/coverage-summary.json" ]; then
+          COVERAGE=$(cat ../coveragereport/coverage-summary.json | jq -r '.coverage')
+          echo "Current coverage: ${COVERAGE}%"
+          
+          # Set threshold to 75% for now, can be increased later
+          THRESHOLD=75
+          if (( $(echo "$COVERAGE < $THRESHOLD" | bc -l) )); then
+            echo "::warning::Coverage ${COVERAGE}% is below threshold ${THRESHOLD}%"
+            # Don't fail for now, just warn
+            # exit 1
+          else
+            echo "✅ Coverage ${COVERAGE}% meets threshold ${THRESHOLD}%"
+          fi
+        fi

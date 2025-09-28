@@ -1,7 +1,9 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Infrastructure.deps.json
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Infrastructure.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Infrastructure.pdb
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Application.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Domain.dll
+/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Application.pdb
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Domain.pdb
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/TodoApi.Infrastructure.csproj.AssemblyReference.cache
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/TodoApi.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
@@ -14,5 +16,3 @@
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/refint/TodoApi.Infrastructure.dll
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/TodoApi.Infrastructure.pdb
 /Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/obj/Debug/net9.0/ref/TodoApi.Infrastructure.dll
-/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Application.dll
-/Users/rezazeraat/Projects/task-management-system/TodoApi/TodoApi.Infrastructure/bin/Debug/net9.0/TodoApi.Application.pdb

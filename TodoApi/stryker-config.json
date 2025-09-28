@@ -1,0 +1,55 @@
+{
+  "stryker-config": {
+    "project": "TodoApi.WebApi/TodoApi.WebApi.csproj",
+    "test-runner": "dotnet-test",
+    "reporters": ["html", "json", "cleartext", "dashboard"],
+    "log-level": "info",
+    "concurrency": 4,
+    "threshold-high": 90,
+    "threshold-low": 75,
+    "threshold-break": 60,
+    "coverage-analysis": "perTest",
+    "mutation-level": "Complete",
+    "exclude-files": [
+      "**/bin/**/*",
+      "**/obj/**/*", 
+      "**/Properties/**/*",
+      "**/Program.cs",
+      "**/*Tests.cs",
+      "**/*Test.cs",
+      "**/TestResults/**/*",
+      "**/Migrations/**/*",
+      "**/wwwroot/**/*"
+    ],
+    "mutate": [
+      "TodoApi.Application/**/*.cs",
+      "TodoApi.Domain/**/*.cs",
+      "TodoApi.Infrastructure/**/*.cs",
+      "TodoApi.WebApi/**/*.cs"
+    ],
+    "ignore-methods": [
+      "*ToString*",
+      "*GetHashCode*",
+      "*Equals*",
+      "*CompareTo*",
+      "*.ctor",
+      "*Dispose*"
+    ],
+    "ignore-mutations": [
+      "StringLiteral"
+    ],
+    "test-projects": [
+      "TodoApi.Tests.Unit/TodoApi.Tests.Unit.csproj",
+      "TodoApi.Tests.Integration/TodoApi.Tests.Integration.csproj"
+    ],
+    "break-at": [
+      "CompileError"
+    ],
+    "timeout-ms": 60000,
+    "additional-timeout-ms": 30000,
+    "disable-bail": true,
+    "baseline": {
+      "provider": "git"
+    }
+  }
+}

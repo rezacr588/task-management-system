@@ -11,15 +11,19 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__DefaultConnection=Host=postgres-dev;Port=5432;Database=todoapi_dev;Username=postgres;Password=postgres
+      - ConnectionStrings__Redis=redis-dev:6379
       - Jwt__Key=development-key-minimum-32-characters-long
       - Jwt__Issuer=TodoApi.Development
       - Jwt__Audience=TodoApi.Development
     depends_on:
       postgres-dev:
         condition: service_healthy
+      redis-dev:
+        condition: service_healthy
     restart: unless-stopped
     volumes:
       - ./TodoApi:/app/src:cached
+      - ./logs:/app/logs
 
   postgres-dev:
     image: postgres:15-alpine
@@ -39,8 +43,34 @@ services:
       retries: 5
     restart: unless-stopped
 
+  redis-dev:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis-dev:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      redis-dev:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   postgres_dev_data:
+  redis_dev_data:
 
 networks:
   default:

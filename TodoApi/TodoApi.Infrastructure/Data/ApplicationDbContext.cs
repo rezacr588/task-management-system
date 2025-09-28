@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Infrastructure.Data.Configurations;
-using TodoApi.Domain.Entities; // Adjust this to your actual domain entities' namespace
+using TodoApi.Domain.Entities;
+using TodoApi.Infrastructure.Services;
 
 namespace TodoApi.Infrastructure.Data
 {
@@ -11,11 +12,16 @@ namespace TodoApi.Infrastructure.Data
         {
         }
 
+        // Domain entities
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ActivityLogEntry> ActivityLogEntries { get; set; }
+
+        // Event sourcing and infrastructure
+        public DbSet<EventStoreEntry> EventStore { get; set; }
+        public DbSet<SnapshotStoreEntry> SnapshotStore { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

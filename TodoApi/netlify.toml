@@ -1,0 +1,19 @@
+[build]
+  publish = "TodoApi.WebApi/bin/Release/net9.0/publish"
+  command = "dotnet publish TodoApi/TodoApi.WebApi/TodoApi.WebApi.csproj --configuration Release --output publish"
+
+[build.environment]
+  DOTNET_CLI_TELEMETRY_OPTOUT = "1"
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE = "1"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
